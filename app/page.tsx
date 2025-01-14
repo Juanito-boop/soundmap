@@ -259,20 +259,22 @@ function Home() {
 					) : artists && artists.length > 0 ? (
 						<div className="space-y-4">
 							{artists.map((artist) => (
-								<Card key={artist.id} className="p-4 bg-gray-800 border-gray-700">
-									<div className="grid grid-cols-2 gap-4">
-										<div>
-											<h3 className="font-bold text-lg text-gray-50">{artist.name}</h3>
-											<p className="text-gray-400">Country: {artist.country}</p>
-											<p className="text-gray-400">Debut: {artist.debut}</p>
+								!(!artist.gender && !artist.members) && (
+									<Card key={artist.id} className="p-4 bg-gray-800 border-gray-700">
+										<div className="grid grid-cols-2 gap-4">
+											<div>
+												<h3 className="font-bold text-lg text-gray-50">{artist.name}</h3>
+												<p className="text-gray-400">Country: {artist.country}</p>
+												<p className="text-gray-400">Debut: {artist.debut}</p>
+											</div>
+											<div>
+												<p className="text-gray-400">Gender: {artist.gender}</p>
+												<p className="text-gray-400">Members: {artist.members}</p>
+												<p className="text-gray-400">Popularity: {artist.popularity}</p>
+											</div>
 										</div>
-										<div>
-											<p className="text-gray-400">Gender: {artist.gender}</p>
-											<p className="text-gray-400">Members: {artist.members}</p>
-											<p className="text-gray-400">Popularity: {artist.popularity}</p>
-										</div>
-									</div>
-								</Card>
+									</Card>
+								)
 							))}
 						</div>
 					) : artists?.length === 0 ? (
