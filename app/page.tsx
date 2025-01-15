@@ -7,13 +7,12 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { ArrowDownIcon, ArrowUpIcon, CheckIcon, Music2Icon } from 'lucide-react';
+import { ArrowDownIcon, ArrowUpIcon, CheckIcon, CircleIcon, Music2Icon } from 'lucide-react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-type MatchStatus = 'none' | 'correct' | 'higher' | 'lower';
+type MatchStatus = 'none' | 'correct' | 'higher' | 'lower' | 'continent';
 
-const genderOptions = ['Female', 'Male'] as const;
-// const genderOptions = ['Female', 'Male', 'Mixed', 'Non Binary'] as const;
+const genderOptions = ['Female', 'Male', 'Mixed'] as const;
 const memberTypes = ['Solo', 'Group'] as const;
 
 function Home() {
@@ -104,6 +103,8 @@ function Home() {
 			case 'higher':
 			case 'lower':
 				return 'bg-yellow-900 border-yellow-500 text-white';
+			case 'continent':
+				return 'bg-yellow-900 border-yellow-500 text-white';
 			default:
 				return 'bg-gray-700 border-gray-600 text-white';
 		}
@@ -115,6 +116,76 @@ function Home() {
 			[field]: prev[field] === status ? 'none' : status
 		}));
 	};
+
+	const renderStatusButtons = (field: keyof typeof filters) => {
+		if (field === 'country') {
+			return (
+				<div className="flex space-x-2">
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setStatus(field, 'correct')}
+						className={`flex-1 h-8 ${matchStatus[field] === 'correct' ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-gray-700'}`}
+					>
+						<CheckIcon className="w-4 h-4" />
+					</Button>
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setStatus(field, 'continent')}
+						className={`flex-1 h-8 ${matchStatus[field] === 'continent' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
+					>
+						<CircleIcon className="w-4 h-4" />
+					</Button>
+				</div>
+			);
+		}
+
+		if (field === 'gender' || field === 'members') {
+			return (
+				<div className="flex space-x-2">
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setStatus(field, 'correct')}
+						className={`flex-1 h-8 ${matchStatus[field] === 'correct' ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-gray-700'}`}
+					>
+						<CheckIcon className="w-4 h-4" />
+					</Button>
+				</div>
+			);
+		}
+
+		return (
+			<div className="flex space-x-2">
+				<Button
+					variant="ghost"
+					size="sm"
+					onClick={() => setStatus(field, 'correct')}
+					className={`flex-1 h-8 ${matchStatus[field] === 'correct' ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-gray-700'}`}
+				>
+					<CheckIcon className="w-4 h-4" />
+				</Button>
+				<Button
+					variant="ghost"
+					size="sm"
+					onClick={() => setStatus(field, 'higher')}
+					className={`flex-1 h-8 ${matchStatus[field] === 'higher' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
+				>
+					<ArrowUpIcon className="w-4 h-4" />
+				</Button>
+				<Button
+					variant="ghost"
+					size="sm"
+					onClick={() => setStatus(field, 'lower')}
+					className={`flex-1 h-8 ${matchStatus[field] === 'lower' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
+				>
+					<ArrowDownIcon className="w-4 h-4" />
+				</Button>
+			</div>
+		);
+	};
+
 	const renderField = (field: keyof typeof filters) => {
 		if (field === 'country' && distinctCountries?.length) {
 			return (
@@ -126,7 +197,7 @@ function Home() {
 						<SelectValue placeholder="Select country" />
 					</SelectTrigger>
 					<SelectContent>
-						{distinctCountries?.map((item) => (
+						{distinctCountries.map((item) => (
 							item.country && (
 								<SelectItem key={item.country} value={item.country}>
 									{item.country}
@@ -182,7 +253,7 @@ function Home() {
 			<Input
 				type={field === 'debut' || field === 'popularity' ? 'number' : 'text'}
 				value={filters[field]}
-				onChange={(e) => setFilters({ ...filters, [field]: e.target.value })}
+				onChange={(e) => setFilters(prev => ({ ...prev, [field]: e.target.value }))}
 				className={getInputStyle(field as keyof typeof matchStatus)}
 				placeholder={`Enter ${field}`}
 			/>
@@ -197,22 +268,27 @@ function Home() {
 					<h1 className="text-3xl font-bold">SoundMap Artist Finder</h1>
 				</div>
 
-				<div className="mb-8">
-					<Select value={selectedGenre} onValueChange={(value) => setSelectedGenre(value as Genre)}>
-						<SelectTrigger className="w-[200px] text-black">
-							<SelectValue placeholder="Select genre" />
-						</SelectTrigger>
-						<SelectContent>
-							{genres.map((genre) => (
-								<SelectItem key={genre} value={genre}>
-									{genre}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
-				</div>
-
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+					<Card className="p-4 bg-gray-800 border-gray-700">
+						<div className="flex flex-col space-y-2">
+							<label className="text-sm font-medium text-white">
+								Genre
+							</label>
+							<Select value={selectedGenre} onValueChange={(value) => setSelectedGenre(value as Genre)}>
+								<SelectTrigger className={`bg-gray-700 border-gray-600 text-white`}>
+									<SelectValue placeholder="Select genre" />
+								</SelectTrigger>
+								<SelectContent>
+									{genres.map((genre) => (
+										<SelectItem key={genre} value={genre}>
+											{genre}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</div>
+					</Card>
+
 					{(['country', 'debut', 'gender', 'members', 'popularity'] as const).map((field) => (
 						<Card key={field} className="p-4 bg-gray-800 border-gray-700">
 							<div className="flex flex-col space-y-2">
@@ -220,34 +296,7 @@ function Home() {
 									{field}
 								</label>
 								{renderField(field)}
-								<div className="flex space-x-2">
-									<Button
-										variant="ghost"
-										size="sm"
-										onClick={() => setStatus(field, 'correct')}
-										className={`flex-1 h-8 ${matchStatus[field] === 'correct' ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-gray-700'}`}
-									>
-										<CheckIcon className="w-4 h-4" />
-									</Button>
-									<Button
-										variant="ghost"
-										size="sm"
-										onClick={() => setStatus(field, 'higher')}
-										className={`flex-1 h-8 ${matchStatus[field] === 'higher' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
-										disabled={field === 'country' || field === 'gender' || field === 'members'}
-									>
-										<ArrowUpIcon className="w-4 h-4" />
-									</Button>
-									<Button
-										variant="ghost"
-										size="sm"
-										onClick={() => setStatus(field, 'lower')}
-										className={`flex-1 h-8 ${matchStatus[field] === 'lower' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
-										disabled={field === 'country' || field === 'gender' || field === 'members'}
-									>
-										<ArrowDownIcon className="w-4 h-4" />
-									</Button>
-								</div>
+								{renderStatusButtons(field)}
 							</div>
 						</Card>
 					))}
@@ -259,22 +308,20 @@ function Home() {
 					) : artists && artists.length > 0 ? (
 						<div className="space-y-4">
 							{artists.map((artist) => (
-								!(!artist.gender && !artist.members) && (
-									<Card key={artist.id} className="p-4 bg-gray-800 border-gray-700">
-										<div className="grid grid-cols-2 gap-4">
-											<div>
-												<h3 className="font-bold text-lg text-gray-50">{artist.name}</h3>
-												<p className="text-gray-400">Country: {artist.country}</p>
-												<p className="text-gray-400">Debut: {artist.debut}</p>
-											</div>
-											<div>
-												<p className="text-gray-400">Gender: {artist.gender}</p>
-												<p className="text-gray-400">Members: {artist.members}</p>
-												<p className="text-gray-400">Popularity: {artist.popularity}</p>
-											</div>
+								<Card key={artist.id} className="p-4 bg-gray-800 border-gray-700">
+									<div className="grid grid-cols-2 gap-4">
+										<div>
+											<h3 className="font-bold text-lg text-gray-50">{artist.name}</h3>
+											<p className="text-gray-400">Country: {artist.country}</p>
+											<p className="text-gray-400">Debut: {artist.debut}</p>
 										</div>
-									</Card>
-								)
+										<div>
+											<p className="text-gray-400">Gender: {artist.gender}</p>
+											<p className="text-gray-400">Members: {artist.members}</p>
+											<p className="text-gray-400">Popularity: {artist.popularity}</p>
+										</div>
+									</div>
+								</Card>
 							))}
 						</div>
 					) : artists?.length === 0 ? (
