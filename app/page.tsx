@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { ArrowDownIcon, ArrowUpIcon, CheckIcon, CircleIcon, Music2Icon } from 'lucide-react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { arrayOfContients, type world } from './continents';
 
 type MatchStatus = 'none' | 'correct' | 'higher' | 'lower' | 'continent';
 
@@ -32,6 +33,26 @@ function Home() {
 		popularity: 'none' as MatchStatus,
 	});
 
+	const isInSameContinent = (userCountry: string, artistCountry: string) => {
+		const continents = arrayOfContients[0];
+		let userContinent = '';
+		let artistContinent = '';
+
+		// Find the continent for both countries
+		for (const [continent, countries] of Object.entries(continents)) {
+			const userMatch = countries.find(c => c.common === userCountry);
+			const artistMatch = countries.find(c => c.common === artistCountry);
+
+			if (userMatch) userContinent = continent;
+			if (artistMatch) artistContinent = continent;
+
+			// If we found both countries, we can stop searching
+			if (userContinent && artistContinent) break;
+		}
+
+		return userContinent === artistContinent && userContinent !== '';
+	};
+
 	const { data: distinctCountries } = useQuery({
 		queryKey: ['countries'],
 		queryFn: async () => {
@@ -47,8 +68,17 @@ function Home() {
 			try {
 				let query = supabase.from(selectedGenre).select('*');
 
-				if (filters.country && matchStatus.country === 'correct') {
-					query = query.eq('country', filters.country);
+				if (filters.country) {
+					if (matchStatus.country === 'correct') {
+						query = query.eq('country', filters.country);
+					} else if (matchStatus.country === 'continent') {
+						const { data: allArtists } = await supabase.from(selectedGenre).select('*');
+						const filteredArtists = allArtists?.filter(artist =>
+							isInSameContinent(filters.country, artist.country)
+						) || [];
+						const artistIds = filteredArtists.map(artist => artist.id);
+						query = query.in('id', artistIds);
+					}
 				}
 
 				if (filters.debut) {
@@ -57,9 +87,9 @@ function Home() {
 						if (matchStatus.debut === 'correct') {
 							query = query.eq('debut', debutYear);
 						} else if (matchStatus.debut === 'higher') {
-							query = query.gt('debut', debutYear);
+							query = query.gte('debut', debutYear).lte('debut', debutYear + 10);
 						} else if (matchStatus.debut === 'lower') {
-							query = query.lt('debut', debutYear);
+							query = query.gte('debut', debutYear - 10).lte('debut', debutYear);
 						}
 					}
 				}
@@ -78,9 +108,9 @@ function Home() {
 						if (matchStatus.popularity === 'correct') {
 							query = query.eq('popularity', popularityValue);
 						} else if (matchStatus.popularity === 'higher') {
-							query = query.gt('popularity', popularityValue);
+							query = query.lt('popularity', popularityValue); // Inverted logic for popularity
 						} else if (matchStatus.popularity === 'lower') {
-							query = query.lt('popularity', popularityValue);
+							query = query.gt('popularity', popularityValue); // Inverted logic for popularity
 						}
 					}
 				}
@@ -127,7 +157,7 @@ function Home() {
 						onClick={() => setStatus(field, 'correct')}
 						className={`flex-1 h-8 ${matchStatus[field] === 'correct' ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-gray-700'}`}
 					>
-						<CheckIcon className="w-4 h-4" />
+						<CheckIcon className="w-4 h-4 text-white hover:text-white" />
 					</Button>
 					<Button
 						variant="ghost"
@@ -135,7 +165,7 @@ function Home() {
 						onClick={() => setStatus(field, 'continent')}
 						className={`flex-1 h-8 ${matchStatus[field] === 'continent' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
 					>
-						<CircleIcon className="w-4 h-4" />
+						<CircleIcon className="w-4 h-4 text-white hover:text-white" />
 					</Button>
 				</div>
 			);
@@ -150,7 +180,69 @@ function Home() {
 						onClick={() => setStatus(field, 'correct')}
 						className={`flex-1 h-8 ${matchStatus[field] === 'correct' ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-gray-700'}`}
 					>
-						<CheckIcon className="w-4 h-4" />
+						<CheckIcon className="w-4 h-4 text-white hover:text-white" />
+					</Button>
+				</div>
+			);
+		}
+
+		if (field === 'debut') {
+			return (
+				<div className="flex space-x-2">
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setStatus(field, 'correct')}
+						className={`flex-1 h-8 ${matchStatus[field] === 'correct' ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-gray-700'}`}
+					>
+						<CheckIcon className="w-4 h-4 text-white hover:text-white" />
+					</Button>
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setStatus(field, 'higher')}
+						className={`flex-1 h-8 text-white hover:text-white ${matchStatus[field] === 'higher' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
+					>
+						After
+					</Button>
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setStatus(field, 'lower')}
+						className={`flex-1 h-8 text-white hover:text-white ${matchStatus[field] === 'lower' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
+					>
+						Before
+					</Button>
+				</div>
+			);
+		}
+
+		if (field === 'popularity') {
+			return (
+				<div className="flex space-x-2">
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setStatus(field, 'correct')}
+						className={`flex-1 h-8 ${matchStatus[field] === 'correct' ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-gray-700'}`}
+					>
+						<CheckIcon className="w-4 h-4 text-white hover:text-white" />
+					</Button>
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setStatus(field, 'higher')}
+						className={`flex-1 h-8 ${matchStatus[field] === 'higher' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
+					>
+						<ArrowUpIcon className="w-4 h-4 text-white hover:text-white" />
+					</Button>
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setStatus(field, 'lower')}
+						className={`flex-1 h-8 ${matchStatus[field] === 'lower' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
+					>
+						<ArrowDownIcon className="w-4 h-4 text-white hover:text-white" />
 					</Button>
 				</div>
 			);
@@ -164,7 +256,7 @@ function Home() {
 					onClick={() => setStatus(field, 'correct')}
 					className={`flex-1 h-8 ${matchStatus[field] === 'correct' ? 'bg-green-600 hover:bg-green-700' : 'hover:bg-gray-700'}`}
 				>
-					<CheckIcon className="w-4 h-4" />
+					<CheckIcon className="w-4 h-4 text-white hover:text-white" />
 				</Button>
 				<Button
 					variant="ghost"
@@ -219,7 +311,7 @@ function Home() {
 						<SelectValue placeholder="Select gender" />
 					</SelectTrigger>
 					<SelectContent>
-						{genderOptions.map((gender) => (
+						{['Female', 'Male', 'Mixed', 'Non Binary'].map((gender) => (
 							<SelectItem key={gender} value={gender}>
 								{gender}
 							</SelectItem>
@@ -239,7 +331,7 @@ function Home() {
 						<SelectValue placeholder="Select type" />
 					</SelectTrigger>
 					<SelectContent>
-						{memberTypes.map((type) => (
+						{['Solo', 'Group'].map((type) => (
 							<SelectItem key={type} value={type}>
 								{type}
 							</SelectItem>
