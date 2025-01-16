@@ -200,18 +200,18 @@ function Home() {
 					<Button
 						variant="ghost"
 						size="sm"
-						onClick={() => setStatus(field, 'higher')}
-						className={`flex-1 h-8 text-white hover:text-white ${matchStatus[field] === 'higher' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
-					>
-						After
-					</Button>
-					<Button
-						variant="ghost"
-						size="sm"
 						onClick={() => setStatus(field, 'lower')}
 						className={`flex-1 h-8 text-white hover:text-white ${matchStatus[field] === 'lower' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
 					>
 						Before
+					</Button>
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setStatus(field, 'higher')}
+						className={`flex-1 h-8 text-white hover:text-white ${matchStatus[field] === 'higher' ? 'bg-yellow-600 hover:bg-yellow-700' : 'hover:bg-gray-700'}`}
+					>
+						After
 					</Button>
 				</div>
 			);
