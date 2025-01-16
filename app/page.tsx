@@ -311,7 +311,7 @@ function Home() {
 						<SelectValue placeholder="Select gender" />
 					</SelectTrigger>
 					<SelectContent>
-						{['Female', 'Male', 'Mixed', 'Non Binary'].map((gender) => (
+						{['Female', 'Male', 'Mixed'].map((gender) => (
 							<SelectItem key={gender} value={gender}>
 								{gender}
 							</SelectItem>
