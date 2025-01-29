@@ -1,0 +1,45 @@
+{
+  "light": {
+    "background": "255, 255, 255",
+    "foreground": "10, 12, 16",
+    "card": "255, 255, 255",
+    "cardForeground": "10, 12, 16",
+    "popover": "255, 255, 255",
+    "popoverForeground": "10, 12, 16",
+    "primary": "24, 29, 40",
+    "primaryForeground": "248, 250, 252",
+    "secondary": "241, 245, 249",
+    "secondaryForeground": "24, 29, 40",
+    "muted": "241, 245, 249",
+    "mutedForeground": "100, 116, 139",
+    "accent": "241, 245, 249",
+    "accentForeground": "24, 29, 40",
+    "destructive": "239, 68, 68",
+    "destructiveForeground": "248, 250, 252",
+    "border": "226, 232, 240",
+    "input": "226, 232, 240",
+    "ring": "10, 12, 16"
+  },
+  "dark": {
+    "background": "10, 12, 16",
+    "foreground": "248, 250, 252",
+    "card": "10, 12, 16",
+    "cardForeground": "248, 250, 252",
+    "popover": "10, 12, 16",
+    "popoverForeground": "248, 250, 252",
+    "primary": "248, 250, 252",
+    "primaryForeground": "24, 29, 40",
+    "secondary": "30, 37, 51",
+    "secondaryForeground": "248, 250, 252",
+    "muted": "30, 37, 51",
+    "mutedForeground": "148, 163, 184",
+    "accent": "30, 37, 51",
+    "accentForeground": "248, 250, 252",
+    "destructive": "127, 29, 29",
+    "destructiveForeground": "248, 250, 252",
+    "border": "30, 37, 51",
+    "input": "30, 37, 51",
+    "ring": "212, 220, 232"
+  }
+}
+

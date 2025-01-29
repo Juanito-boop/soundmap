@@ -13,20 +13,15 @@ export type Artist = {
   gender: string;
   members: string;
   popularity: number;
+	genre?: Genre
 };
 
 export const genres = [
-  // 'CLASSICAL&JAZZ',
-  // 'COUNTRY',
-  // 'ELECTRONIC',
-  'HIP HOP', //
-  'INDIE', //
-  // 'K-POP',
-  // 'LATIN',
-  // 'METAL',
-  'POP', //
-  'R&B', //
-  'ROCK', //
+  'HIP HOP',
+  'INDIE',
+  'POP',
+  'R&B',
+  'ROCK'
 ] as const;
 
 export type Genre = typeof genres[number];
