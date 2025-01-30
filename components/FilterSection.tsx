@@ -50,7 +50,7 @@ export function FilterSection({
   setSelectedGenre,
 }: FilterSectionProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
       {(["debut", "popularity", "members"] as const).map((field) => (
         <FilterField
           key={field}

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { supabase, type Artist, type Genre } from "@/lib/supabase"
 import { getCountryContinent } from "@/app/continents"
@@ -42,7 +42,7 @@ export function useArtistSearch(initialGenre: Genre) {
 	})
 
 	const buildQuery = useCallback((genre: Genre, filters: Filters, matchStatus: MatchStatus) => {
-		let query = supabase.from(genre).select("id, name, country, debut, gender, members, popularity")
+		let query = supabase.from(genre).select("id, name, country, debut, gender, members, popularity, imageUrl")
 
 		if (filters.debutMin && filters.debutMax) {
 			query = query.gte("debut", Number.parseInt(filters.debutMin)).lte("debut", Number.parseInt(filters.debutMax))
@@ -95,8 +95,6 @@ export function useArtistSearch(initialGenre: Genre) {
 			}
 		}
 
-		query = query.order("popularity", { ascending: false })
-
 		return query
 	}, [])
 
@@ -111,7 +109,7 @@ export function useArtistSearch(initialGenre: Genre) {
 				const query = buildQuery(initialGenre, filters, matchStatus)
 				const { data, error } = await query
 				if (error) throw error
-				return data || []
+				return data ? data.map((artist) => ({ ...artist, genre: initialGenre })) : []
 			} catch (error) {
 				console.error("Error fetching artists:", error)
 				return []
@@ -145,5 +143,15 @@ export function useArtistSearch(initialGenre: Genre) {
 		refetch()
 	}, [refetch])
 
-	return { filters, setFilters, matchStatus, setMatchStatus, artists, isLoading, clearSearch, setSelectedGenre }
+	return {
+		filters,
+		setFilters,
+		matchStatus,
+		setMatchStatus,
+		artists,
+		isLoading,
+		clearSearch,
+		setSelectedGenre,
+	}
 }
+

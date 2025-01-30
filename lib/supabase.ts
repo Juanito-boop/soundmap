@@ -14,6 +14,7 @@ export type Artist = {
   members: string;
   popularity: number;
 	genre?: Genre
+	imageUrl: string
 };
 
 export const genres = [
