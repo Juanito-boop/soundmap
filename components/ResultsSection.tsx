@@ -2,7 +2,6 @@ import { Card } from "@/components/ui/card"
 import type { Artist } from "@/lib/supabase"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { useEffect, useState } from "react"
-import { sleep } from "@/lib/utils"
 
 type ResultsSectionProps = {
   artists: Artist[] | undefined
@@ -10,6 +9,58 @@ type ResultsSectionProps = {
 }
 
 export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
+	const [artistImages, setArtistImages] = useState<{ [key: string]: string }>({})
+
+	useEffect(() => {
+		const fetchAccessToken = async () => {
+			try {
+				const response = await fetch('https://accounts.spotify.com/api/token', {
+					method: 'POST',
+					headers: { 'content-type': 'application/x-www-form-urlencoded' },
+					body: new URLSearchParams({
+						grant_type: 'client_credentials',
+						client_id: '267055690608474eb8187d56a30962c0',
+						client_secret: 'f48c78209034475d8a8c28afebd1222a'
+					})
+				});
+				const data = await response.json();
+				return data.access_token;
+			} catch (error) {
+				console.error("Error fetching access token:", error);
+				return null;
+			}
+		};
+
+		const fetchImageForArtist = async (artist: Artist, token: string) => {
+			try {
+				const response = await fetch(
+					`https://api.spotify.com/v1/search?type=artist&q=${encodeURIComponent(artist.name)}&limit=1`,
+					{ headers: { Authorization: `Bearer ${token}` } }
+				);
+
+				if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+				const data = await response.json();
+				const imageUrl = data.artists.items[0]?.images[0]?.url || `https://via.placeholder.com/300x300.png?text=${encodeURIComponent(artist.name)}`;
+				setArtistImages(prev => ({ ...prev, [artist.id]: imageUrl }));
+			} catch (error) {
+				console.error("Error fetching image:", error);
+				setArtistImages(prev => ({ ...prev, [artist.id]: `https://via.placeholder.com/300x300.png?text=${encodeURIComponent(artist.name)}` }));
+			}
+		};
+
+		const initialize = async () => {
+			const token = await fetchAccessToken();
+			if (token && artists) {
+				await Promise.all(artists.map(artist => fetchImageForArtist(artist, token)));
+			}
+		};
+
+		if (artists) {
+			initialize();
+		}
+	}, [artists]);
+
 	return (
 		<div className="mt-8">
 			{isLoading ? (
@@ -23,8 +74,8 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 						>
 							<div className="col-span-3 flex flex-row justify-start gap-x-4 mx-5 my-auto">
 								<Avatar className="w-164 h-w-w-16 my-auto">
-									{/* <AvatarImage src={artistImages[artist.id]} className="rounded-full" alt="soundmap" loading="lazy" /> */}
-									{/* <AvatarFallback>soundmap</AvatarFallback> */}
+									<AvatarImage src={artistImages[artist.id]} className="rounded-full" alt={`${artist.name} photo`} loading="lazy" />
+									<AvatarFallback>{artist.name}</AvatarFallback>
 								</Avatar>
 								<h3 className="font-bold text-lg my-auto">{artist.name}</h3>
 							</div>
