@@ -60,13 +60,11 @@ type FilterFieldProps = {
 	>
 }
 
-const countryGroups = {
-	America: ["CO", "CW", "GF", "GD", "SX", "AR", "TC", "DM", "UM", "CR", "HT", "BB", "HN", "PR", "FK", "KN", "LC", "BQ", "BO", "CL", "US", "GP", "MX", "VC", "BM", "DO", "GT", "EC", "MQ", "SR", "BL", "BS", "PY", "VG", "BR", "BZ", "VE", "SV", "PE", "TT", "GL", "GY", "JM", "AW", "KY", "CU", "UY", "MF", "AG", "CA", "PA", "MS", "NI", "PM", "VI", "AI"],
-	Europe: ["NO", "GR", "AX", "CH", "HR", "IS", "LU", "HU", "NL", "LT", "SK", "LI", "MD", "IT", "JE", "MC", "BY", "LV", "AD", "FR", "GI", "DK", "MK", "MT", "CZ", "GG", "XK", "SJ", "ME", "FO", "AL", "RS", "UA", "IM", "EE", "RO", "BG", "DE", "PL", "GB", "FI", "SE", "VA", "RU", "AT", "CY", "PT", "BA", "BE", "ES", "SI", "SM", "IE", "UK"],
-	Asia: ["KR", "TW", "JO", "NP", "TH", "KZ", "GE", "PK", "AM", "ID", "JP", "LA", "LB", "PH", "BH", "QA", "TJ", "CN", "YE", "IN", "KW", "SY", "MV", "UZ", "IR", "MM", "LK", "BT", "PS", "BD", "SG", "TR", "AE", "AF", "TL", "VN", "KH", "IQ", "BN", "KG", "AZ", "HK", "MY", "MN", "SA", "TM", "KP", "IL", "OM", "MO"],
-	Africa: ["LS", "CF", "MA", "SL", "BF", "ER", "TZ", "DZ", "MR", "SD", "EH", "AO", "CI", "TN", "ML", "BJ", "CV", "GQ", "UG", "BW", "BI", "ZA", "LY", "YT", "GA", "CM", "GN", "SC", "IO", "MG", "CD", "GM", "SO", "NG", "SS", "SZ", "EG", "SH", "SN", "TG", "KE", "RW", "NA", "LR", "ZM", "NE", "KM", "GW", "GH", "TD", "ZW", "RE", "ST", "MW", "ET", "CG", "DJ", "MU", "MZ"],
-	Oceania: ["NC", "SB", "MH", "VU", "NU", "NR", "CC", "FJ", "WF", "CK", "AU", "TV", "PN", "CX", "GU", "TO", "TK", "WS", "KI", "PF", "PG", "PW", "AS", "MP", "NF", "NZ", "FM"]
-};
+const countryList = [
+	"RU", "DK", "KR", "UZ", "AU", "VN", "AR", "BR", "PL", "DE", "BB", "UK", "IE",
+	"UA", "ES", "NO", "TR", "CO", "BE", "US", "NZ", "NL", "NP", "SE", "PK",	"CA", 
+	"FR", "MX", "RO", "TZ", "PH", "ID", "AM", "ZA", "NG", "IL", "IT", "GB", "IS"
+];
 
 export function FilterField({ field, filters, setFilters, matchStatus, setMatchStatus }: FilterFieldProps) {
 	const { distinctCountries, countrySearchTerm, setCountrySearchTerm } = useCountrySearch()
@@ -88,8 +86,6 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 
 	const renderField = () => {
 		if (field === "country") {
-			const allCountries = Object.values(countryGroups).flat().map(country => ({ country }));
-
 			return (
 				<Select
 					value={filters[field] || undefined}
@@ -108,21 +104,18 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 								className="mb-2"
 							/>
 						</div>
-						{allCountries
+						{countryList
 							.filter(
-								(item) =>
-									item.country &&
-									item.country.toLowerCase().includes(countrySearchTerm.toLowerCase())
+								(country) =>
+									country &&
+									country.toLowerCase().includes(countrySearchTerm.toLowerCase())
 							)
 							.slice(0, 5)
-							.map(
-								(item) =>
-									item.country && (
-										<SelectItem key={item.country} value={item.country}>
-											{item.country}
-										</SelectItem>
-									)
-							)}
+							.map((country) => (
+								<SelectItem key={country} value={country}>
+									{country}
+								</SelectItem>
+							))}
 					</SelectContent>
 				</Select>
 			);
