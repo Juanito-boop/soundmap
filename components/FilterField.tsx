@@ -60,12 +60,6 @@ type FilterFieldProps = {
 	>
 }
 
-const countryList = [
-	"RU", "DK", "KR", "UZ", "AU", "VN", "AR", "BR", "PL", "DE", "BB", "UK", "IE",
-	"UA", "ES", "NO", "TR", "CO", "BE", "US", "NZ", "NL", "NP", "SE", "PK",	"CA", 
-	"FR", "MX", "RO", "TZ", "PH", "ID", "AM", "ZA", "NG", "IL", "IT", "GB", "IS"
-];
-
 export function FilterField({ field, filters, setFilters, matchStatus, setMatchStatus }: FilterFieldProps) {
 	const { distinctCountries, countrySearchTerm, setCountrySearchTerm } = useCountrySearch()
 	const [isRangeMode, setIsRangeMode] = useState(false)
@@ -85,7 +79,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 	}
 
 	const renderField = () => {
-		if (field === "country") {
+		if (field === "country" && distinctCountries?.length) {
 			return (
 				<Select
 					value={filters[field] || undefined}
@@ -94,7 +88,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 					<SelectTrigger className={getInputStyle(field)}>
 						<SelectValue placeholder="Select country" />
 					</SelectTrigger>
-					<SelectContent className="bg-gray-700">
+					<SelectContent className="bg-gray-700 py-2  max-h-60">
 						<div className="p-2">
 							<Input
 								type="text"
@@ -104,21 +98,19 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 								className="mb-2"
 							/>
 						</div>
-						{countryList
-							.filter(
-								(country) =>
-									country &&
-									country.toLowerCase().includes(countrySearchTerm.toLowerCase())
-							)
-							.slice(0, 5)
-							.map((country) => (
-								<SelectItem key={country} value={country}>
-									{country}
-								</SelectItem>
-							))}
+						{distinctCountries
+							.filter((item) => item.country && item.country.toLowerCase().includes(countrySearchTerm.toLowerCase()))
+							.map(
+								(item) =>
+									item.country && (
+										<SelectItem key={item.country} value={item.country}>
+											{item.country}
+										</SelectItem>
+									),
+							)}
 					</SelectContent>
 				</Select>
-			);
+			)
 		}
 
 		if (field === "gender") {
