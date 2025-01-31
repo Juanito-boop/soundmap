@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ArrowUpDown, Columns, Columns2, Columns3 } from 'lucide-react'
+import { ArrowUpDown, Columns, Columns2 } from 'lucide-react'
 
 type ControlButtonsProps = {
   sortOrder: "asc" | "desc"
