@@ -5,76 +5,76 @@ import { FilterField } from "./FilterField"
 import { GenreSelect } from "./GenreSelect"
 
 type FilterSectionProps = {
-  filters: {
-    debut: string
-    gender: string
-    members: string
-    country: string
-    popularity: string
-  }
-  setFilters: Dispatch<
-    SetStateAction<{
-      debut: string
-      gender: string
-      members: string
-      country: string
-      popularity: string
-    }>
-  >
-  matchStatus: {
-    debut: string
-    gender: string
-    members: string
-    country: string
-    popularity: string
-  }
-  setMatchStatus: Dispatch<
-    SetStateAction<{
-      debut: string
-      gender: string
-      members: string
-      country: string
-      popularity: string
-    }>
-  >
-  selectedGenre: Genre
-  setSelectedGenre: (genre: Genre) => void
+	filters: {
+		debut: string
+		gender: string
+		members: string
+		country: string
+		popularity: string
+	}
+	setFilters: Dispatch<
+		SetStateAction<{
+			debut: string
+			gender: string
+			members: string
+			country: string
+			popularity: string
+		}>
+	>
+	matchStatus: {
+		debut: string
+		gender: string
+		members: string
+		country: string
+		popularity: string
+	}
+	setMatchStatus: Dispatch<
+		SetStateAction<{
+			debut: string
+			gender: string
+			members: string
+			country: string
+			popularity: string
+		}>
+	>
+	selectedGenres: Genre[]
+	setSelectedGenres: (genres: Genre[]) => void
 }
 
 export function FilterSection({
-  filters,
-  setFilters,
-  matchStatus,
-  setMatchStatus,
-  selectedGenre,
-  setSelectedGenre,
+	filters,
+	setFilters,
+	matchStatus,
+	setMatchStatus,
+	selectedGenres,
+	setSelectedGenres,
 }: FilterSectionProps) {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-      {(["debut", "popularity", "members"] as const).map((field) => (
-        <FilterField
-          key={field}
-          field={field}
-          filters={filters}
-          setFilters={setFilters}
-          matchStatus={matchStatus}
-          setMatchStatus={setMatchStatus}
-        />
-      ))}
-      <Card className="p-4 bg-card text-card-foreground">
-        <GenreSelect selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} genres={genres} />
-      </Card>
-      {(["country", "gender"] as const).map((field) => (
-        <FilterField
-          key={field}
-          field={field}
-          filters={filters}
-          setFilters={setFilters}
-          matchStatus={matchStatus}
-          setMatchStatus={setMatchStatus}
-        />
-      ))}
-    </div>
-  )
+	return (
+		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+			{(["debut", "popularity", "members"] as const).map((field) => (
+				<FilterField
+					key={field}
+					field={field}
+					filters={filters}
+					setFilters={setFilters}
+					matchStatus={matchStatus}
+					setMatchStatus={setMatchStatus}
+				/>
+			))}
+			<Card className="p-4 bg-card text-card-foreground">
+				<GenreSelect selectedGenres={selectedGenres} setSelectedGenres={setSelectedGenres} genres={genres} />
+			</Card>
+			{(["country", "gender"] as const).map((field) => (
+				<FilterField
+					key={field}
+					field={field}
+					filters={filters}
+					setFilters={setFilters}
+					matchStatus={matchStatus}
+					setMatchStatus={setMatchStatus}
+				/>
+			))}
+		</div>
+	)
 }
 

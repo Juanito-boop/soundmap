@@ -83,7 +83,12 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 			return (
 				<Select
 					value={filters[field] || undefined}
-					onValueChange={(value) => setFilters({ ...filters, [field]: value })}
+					onValueChange={(value) => {
+						setFilters({ ...filters, [field]: value })
+						if (field === 'country') {
+							setMatchStatus({ ...matchStatus, [field]: 'correct' })
+						}
+					}}
 				>
 					<SelectTrigger className={getInputStyle(field)}>
 						<SelectValue placeholder="Select country" />
@@ -117,7 +122,12 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 			return (
 				<Select
 					value={filters[field] || undefined}
-					onValueChange={(value) => setFilters({ ...filters, [field]: value })}
+					onValueChange={(value) => {
+						setFilters({ ...filters, [field]: value })
+						if (field === 'gender') {
+							setMatchStatus({ ...matchStatus, [field]: 'correct' })
+						}
+					}}
 				>
 					<SelectTrigger className={getInputStyle(field)}>
 						<SelectValue placeholder="Select gender" />

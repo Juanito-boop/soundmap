@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ThemeSwitcher } from "@/components/theme-switcher"
+import KoFi from "@/components/ko-fi"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -27,6 +28,7 @@ export default function RootLayout({
 					{children}
 					<ThemeSwitcher />
 				</ThemeProvider>
+			<KoFi />
 			</body>
 		</html>
 	)

@@ -103,13 +103,13 @@ export function useArtistSearch(initialGenre: Genre) {
 		isLoading,
 		refetch,
 	} = useQuery<Artist[]>({
-		queryKey: ["artists", initialGenre, filters, matchStatus],
+		queryKey: ["artists", selectedGenre, filters, matchStatus],
 		queryFn: async () => {
 			try {
-				const query = buildQuery(initialGenre, filters, matchStatus)
+				const query = buildQuery(selectedGenre, filters, matchStatus)
 				const { data, error } = await query
 				if (error) throw error
-				return data ? data.map((artist) => ({ ...artist, genre: initialGenre })) : []
+				return data ? data.map((artist) => ({ ...artist, genre: selectedGenre })) : []
 			} catch (error) {
 				console.error("Error fetching artists:", error)
 				return []
