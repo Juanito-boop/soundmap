@@ -27,7 +27,7 @@ export function GenreSelect({ selectedGenres, setSelectedGenres, genres }: Genre
 		<div className="space-y-2">
 			<div className="flex items-center justify-between">
 				<Label htmlFor="genre-select">Genre</Label>
-				<div className="flex items-center space-x-2">
+				{/* <div className="flex items-center space-x-2">
 					<Label htmlFor="multi-select-switch" className="text-sm">
 						Multi-select
 					</Label>
@@ -37,7 +37,7 @@ export function GenreSelect({ selectedGenres, setSelectedGenres, genres }: Genre
 						checked={isMultiSelect} 
 						onCheckedChange={setIsMultiSelect} 
 					/>
-				</div>
+				</div> */}
 			</div>
 			<Select
 				value={isMultiSelect ? undefined : selectedGenres[0]}
