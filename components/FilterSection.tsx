@@ -61,7 +61,7 @@ export function FilterSection({
 					setMatchStatus={setMatchStatus}
 				/>
 			))}
-			<Card className="p-4 bg-card text-card-foreground dark:bg-card-dark dark:text-card-foreground-dark">
+			<Card className="p-4 bg-card text-card-foreground">
 				<GenreSelect selectedGenres={selectedGenres} setSelectedGenres={setSelectedGenres} genres={genres} />
 			</Card>
 			{(["country", "gender"] as const).map((field) => (
