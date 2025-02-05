@@ -11,28 +11,40 @@ type ResultsSectionProps = {
 }
 
 export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
-	const [columnCount, setColumnCount] = useState<1 | 2>(2)
-	const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc")
+	const [columnCount, setColumnCount] = useState<1 | 2>(2);
+	const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+	// Estado para el criterio de ordenamiento: por defecto "popularity"
+	const [sortField, setSortField] = useState<"popularity" | "debut">("popularity");
 
 	const sortedArtists = useMemo(() => {
-		if (!artists) return []
+		if (!artists) return [];
 		return [...artists].sort((a, b) => {
-			if (sortOrder === "asc") {
-				return a.popularity - b.popularity
-			} else {
-				return b.popularity - a.popularity
+			if (sortField === "popularity") {
+				return sortOrder === "asc"
+					? a.popularity - b.popularity
+					: b.popularity - a.popularity;
+			} else if (sortField === "debut") {
+				const debutA = typeof a.debut === "number" ? a.debut : parseInt(a.debut as string, 10) || 0;
+				const debutB = typeof b.debut === "number" ? b.debut : parseInt(b.debut as string, 10) || 0;
+				return sortOrder === "asc"
+					? debutA - debutB
+					: debutB - debutA;
 			}
-		})
-	}, [artists, sortOrder])
+			return 0;
+		});
+	}, [artists, sortField, sortOrder]);
 
 	return (
 		<div className="mt-4">
 			<ControlButtons
 				sortOrder={sortOrder}
 				onSortOrderChange={setSortOrder}
+				sortField={sortField}
+				onSortFieldChange={setSortField}
 				columnCount={columnCount}
 				onColumnCountChange={setColumnCount}
 			/>
+
 			{isLoading ? (
 				<p className="text-center text-muted-foreground">Loading artists...</p>
 			) : sortedArtists && sortedArtists.length > 0 ? (
@@ -62,7 +74,7 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 										</Avatar>
 										<h3 className="font-bold text-lg my-auto">{artist.name}</h3>
 									</div>
-									<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-gray-700 [&>div]:text-lg">
+									<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-input [&>div]: dark:[&>div]:bg-input-dark [&>div]:text-lg">
 										<div className="row-start-1 flex flex-col rounded-sm p-1 align-middle">
 											<span className="mx-auto">Debut</span>
 											<span className="mx-auto">{artist.debut}</span>

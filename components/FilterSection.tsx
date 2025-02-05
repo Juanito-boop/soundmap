@@ -50,7 +50,7 @@ export function FilterSection({
 	setSelectedGenres,
 }: FilterSectionProps) {
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
 			{(["debut", "popularity", "members"] as const).map((field) => (
 				<FilterField
 					key={field}
@@ -61,7 +61,7 @@ export function FilterSection({
 					setMatchStatus={setMatchStatus}
 				/>
 			))}
-			<Card className="p-4 bg-card text-card-foreground">
+			<Card className="p-4 bg-card text-card-foreground dark:bg-card-dark dark:text-card-foreground-dark">
 				<GenreSelect selectedGenres={selectedGenres} setSelectedGenres={setSelectedGenres} genres={genres} />
 			</Card>
 			{(["country", "gender"] as const).map((field) => (

@@ -27,7 +27,7 @@ export function GenreSelect({ selectedGenres, setSelectedGenres, genres }: Genre
 		<div className="space-y-2">
 			<div className="flex items-center justify-between">
 				<Label htmlFor="genre-select">Genre</Label>
-				{/* <div className="flex items-center space-x-2">
+				<div className="flex items-center space-x-2">
 					<Label htmlFor="multi-select-switch" className="text-sm">
 						Multi-select
 					</Label>
@@ -37,17 +37,17 @@ export function GenreSelect({ selectedGenres, setSelectedGenres, genres }: Genre
 						checked={isMultiSelect} 
 						onCheckedChange={setIsMultiSelect} 
 					/>
-				</div> */}
+				</div>
 			</div>
 			<Select
 				value={isMultiSelect ? undefined : selectedGenres[0]}
 				onValueChange={(value) => !isMultiSelect && setSelectedGenres([value as Genre])}
 			>
-				<SelectTrigger id="genre-select" className="bg-input-dark">
+				<SelectTrigger id="genre-select" className="bg-input  dark:bg-input-dark ">
 					<SelectValue placeholder="Select genre" />
 				</SelectTrigger>
 				<SelectContent>
-					<ScrollArea className="h-[200px] bg-input-dark">
+					<ScrollArea className="h-[200px] bg-input  dark:bg-input-dark ">
 						{isMultiSelect
 							? genres.map((genre) => (
 								<div key={genre} className="flex items-center space-x-2 p-2">

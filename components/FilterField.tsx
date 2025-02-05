@@ -74,7 +74,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 			case "continent":
 				return "bg-yellow-900 border-yellow-500 text-white"
 			default:
-				return "bg-gray-700 border-gray-600 text-white"
+				return ""
 		}
 	}
 
@@ -90,10 +90,10 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 						}
 					}}
 				>
-					<SelectTrigger className={getInputStyle(field)}>
+					<SelectTrigger className={`bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark ${getInputStyle(field)}`}>
 						<SelectValue placeholder="Select country" />
 					</SelectTrigger>
-					<SelectContent className="bg-gray-700 py-2  max-h-60">
+					<SelectContent className="bg-gray-700 py-2 dark:bg-gray-800 max-h-60">
 						<div className="p-2">
 							<Input
 								type="text"
@@ -129,10 +129,10 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 						}
 					}}
 				>
-					<SelectTrigger className={getInputStyle(field)}>
+					<SelectTrigger className={`bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark ${getInputStyle(field)}`}>
 						<SelectValue placeholder="Select gender" />
 					</SelectTrigger>
-					<SelectContent className="bg-gray-700 py-2">
+					<SelectContent className="bg-gray-700 py-2 dark:bg-gray-800">
 						{["Female", "Male", "Mixed"].map((gender) => (
 							<SelectItem key={gender} value={gender}>
 								{gender}
@@ -149,10 +149,10 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 					value={filters[field] || undefined}
 					onValueChange={(value) => setFilters({ ...filters, [field]: value })}
 				>
-					<SelectTrigger className={getInputStyle(field)}>
+					<SelectTrigger className={`bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark ${getInputStyle(field)}`}>
 						<SelectValue placeholder="Select type" />
 					</SelectTrigger>
-					<SelectContent className="bg-gray-700 py-2">
+					<SelectContent className="bg-gray-700 py-2 dark:bg-gray-800">
 						{["Solo", "Group"].map((type) => (
 							<SelectItem key={type} value={type}>
 								{type}
@@ -171,14 +171,14 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 							type="number"
 							placeholder="Min"
 							className="flex-1"
-							value={filters[`${field}Min`] || ""}
+							value={filters[`${field}Min`] || "hover:bg-input"}
 							onChange={(e) => setFilters((prev) => ({ ...prev, [`${field}Min`]: e.target.value }))}
 						/>
 						<Input
 							type="number"
 							placeholder="Max"
 							className="flex-1"
-							value={filters[`${field}Max`] || ""}
+							value={filters[`${field}Max`] || "hover:bg-input"}
 							onChange={(e) => setFilters((prev) => ({ ...prev, [`${field}Max`]: e.target.value }))}
 						/>
 					</div>
@@ -189,7 +189,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 						type="number"
 						value={filters[field]}
 						onChange={(e) => setFilters((prev) => ({ ...prev, [field]: e.target.value }))}
-						className={getInputStyle(field)}
+						className={`bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark placeholder:text-black/70 dark:placeholder:text-white ${getInputStyle(field)}`}
 						placeholder={`Enter ${field}`}
 					/>
 				)
@@ -214,17 +214,17 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 						variant="ghost"
 						size="sm"
 						onClick={() => setStatus("correct")}
-						className={`flex-1 h-8 ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700" : "hover:bg-gray-700"}`}
+						className={`flex-1 h-8 dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700" : "hover:bg-input"}`}
 					>
-						<CheckIcon className="w-4 h-4 text-white" />
+						<CheckIcon className="w-4 h-4" />
 					</Button>
 					<Button
 						variant="ghost"
 						size="sm"
 						onClick={() => setStatus("continent")}
-						className={`flex-1 h-8 ${matchStatus[field] === "continent" ? "bg-yellow-600 hover:bg-yellow-700" : "hover:bg-gray-700"}`}
+						className={`flex-1 h-8 dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black ${matchStatus[field] === "continent" ? "bg-yellow-600 hover:bg-yellow-700" : "hover:bg-input"}`}
 					>
-						<CircleIcon className="w-4 h-4 text-white" />
+						<CircleIcon className="w-4 h-4" />
 					</Button>
 				</div>
 			)
@@ -237,9 +237,9 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 						variant="ghost"
 						size="sm"
 						onClick={() => setStatus("correct")}
-						className={`flex-1 h-8 ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700" : "hover:bg-gray-700"}`}
+						className={`flex-1 h-8 dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700" : "hover:bg-input"}`}
 					>
-						<CheckIcon className="w-4 h-4 text-white" />
+						<CheckIcon className="w-4 h-4" />
 					</Button>
 				</div>
 			)
@@ -253,15 +253,15 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 							variant="ghost"
 							size="sm"
 							onClick={() => setStatus("correct")}
-							className={`flex-1 h-8 ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700" : "hover:bg-gray-700"}`}
+							className={`flex-1 h-8 dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700" : "hover:bg-input"}`}
 						>
-							<CheckIcon className="w-4 h-4 text-white" />
+							<CheckIcon className="w-4 h-4" />
 						</Button>
 						<Button
 							variant="ghost"
 							size="sm"
 							onClick={() => setStatus("lower")}
-							className={`flex-1 h-8 text-white hover:text-white ${matchStatus[field] === "lower" ? "bg-yellow-600 hover:bg-yellow-700" : "hover:bg-gray-700"}`}
+							className={`flex-1 h-8 text-black hover:text-black dark:text-input dark:bg-transparent dark:hover:bg-input-dark ${matchStatus[field] === "lower" ? "bg-yellow-600 hover:bg-yellow-700" : "hover:bg-input"}`}
 						>
 							{field === "debut" ? "Before" : "Lower"}
 						</Button>
@@ -269,7 +269,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 							variant="ghost"
 							size="sm"
 							onClick={() => setStatus("higher")}
-							className={`flex-1 h-8 text-white hover:text-white ${matchStatus[field] === "higher" ? "bg-yellow-600 hover:bg-yellow-700" : "hover:bg-gray-700"}`}
+							className={`flex-1 h-8 text-black hover:text-black dark:text-input dark:bg-transparent dark:hover:bg-input-dark ${matchStatus[field] === "higher" ? "bg-yellow-600 hover:bg-yellow-700" : "hover:bg-input"}`}
 						>
 							{field === "debut" ? "After" : "Higher"}
 						</Button>

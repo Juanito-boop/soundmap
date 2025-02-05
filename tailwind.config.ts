@@ -16,140 +16,81 @@ const config: Config = {
       },
       colors: {
 				background: {
-					light: 'hsl(0, 0%, 100%)',
-					dark: 'hsl(222, 23%, 5%)',
+					light: 'rgb(255, 255, 255)',
+					dark: 'rgb(12, 14, 18)',
 				},
 				foreground: {
-					light: 'hsl(222, 24%, 5%)',
-					dark: 'hsl(210, 28%, 98%)',
+					light: 'rgb(12, 14, 18)',
+					dark: 'rgb(247, 249, 252)',
 				},
 				card: {
-					light: 'hsl(0, 0%, 100%)',
-					dark: 'hsl(222, 23%, 5%)',
+					light: 'rgb(255, 255, 255)',
+					dark: 'rgb(12, 14, 18)',
 				},
 				'card-foreground': {
-					light: 'hsl(222, 24%, 5%)',
-					dark: 'hsl(210, 28%, 98%)',
+					light: 'rgb(12, 14, 18)',
+					dark: 'rgb(247, 249, 252)',
 				},
 				popover: {
-					light: 'hsl(0, 0%, 100%)',
-					dark: 'hsl(222, 23%, 5%)',
+					light: 'rgb(255, 255, 255)',
+					dark: 'rgb(12, 14, 18)',
 				},
 				'popover-foreground': {
-					light: 'hsl(222, 24%, 5%)',
-					dark: 'hsl(210, 28%, 98%)',
+					light: 'rgb(12, 14, 18)',
+					dark: 'rgb(247, 249, 252)',
 				},
 				primary: {
-					light: 'hsl(222, 25%, 13%)',
-					dark: 'hsl(210, 28%, 98%)',
+					light: 'rgb(19, 22, 28)',
+					dark: 'rgb(247, 249, 252)',
 				},
 				'primary-foreground': {
-					light: 'hsl(210, 28%, 98%)',
-					dark: 'hsl(222, 25%, 13%)',
+					light: 'rgb(247, 249, 252)',
+					dark: 'rgb(19, 22, 28)',
 				},
 				secondary: {
-					light: 'hsl(210, 36%, 95%)',
-					dark: 'hsl(222, 25%, 16%)',
+					light: 'rgb(240, 244, 247)',
+					dark: 'rgb(22, 26, 33)',
 				},
 				'secondary-foreground': {
-					light: 'hsl(222, 25%, 13%)',
-					dark: 'hsl(210, 28%, 98%)',
+					light: 'rgb(19, 22, 28)',
+					dark: 'rgb(247, 249, 252)',
 				},
 				muted: {
-					light: 'hsl(210, 36%, 95%)',
-					dark: 'hsl(222, 25%, 16%)',
+					light: 'rgb(240, 244, 247)',
+					dark: 'rgb(22, 26, 33)',
 				},
 				'muted-foreground': {
-					light: 'hsl(216, 16%, 47%)',
-					dark: 'hsl(216, 18%, 65%)',
+					light: 'rgb(108, 116, 128)',
+					dark: 'rgb(155, 164, 178)',
 				},
 				accent: {
-					light: 'hsl(210, 36%, 95%)',
-					dark: 'hsl(222, 25%, 16%)',
+					light: 'rgb(240, 244, 247)',
+					dark: 'rgb(22, 26, 33)',
 				},
 				'accent-foreground': {
-					light: 'hsl(222, 25%, 13%)',
-					dark: 'hsl(210, 28%, 98%)',
+					light: 'rgb(19, 22, 28)',
+					dark: 'rgb(247, 249, 252)',
 				},
 				destructive: {
-					light: 'hsl(0, 84%, 60%)',
-					dark: 'hsl(0, 64%, 30%)',
+					light: 'rgb(235, 64, 52)',
+					dark: 'rgb(117, 32, 26)',
 				},
 				'destructive-foreground': {
-					light: 'hsl(210, 28%, 98%)',
-					dark: 'hsl(210, 28%, 98%)',
+					light: 'rgb(247, 249, 252)',
+					dark: 'rgb(247, 249, 252)',
 				},
 				border: {
-					light: 'hsl(214, 32%, 91%)',
-					dark: 'hsl(222, 25%, 16%)',
+					light: 'rgb(229, 234, 239)',
+					dark: 'rgb(22, 26, 33)',
 				},
 				input: {
-					DEFAULT: 'hsl(214, 32%, 91%)',
-					dark: 'hsl(222, 25%, 16%)',
+					DEFAULT: 'rgb(229, 234, 239)',
+					dark: 'rgb(22, 26, 33)',
 				},
 				ring: {
-					light: 'hsl(222, 24%, 5%)',
-					dark: 'hsl(214, 28%, 90%)',
-				},
-        // background: 'hsl(var(--background))',
-        // foreground: 'hsl(var(--foreground))',
-        // card: {
-        //   DEFAULT: 'hsl(var(--card))',
-        //   foreground: 'hsl(var(--card-foreground))',
-        // },
-        // popover: {
-        //   DEFAULT: 'hsl(var(--popover))',
-        //   foreground: 'hsl(var(--popover-foreground))',
-        // },
-        // primary: {
-        //   DEFAULT: 'hsl(var(--primary))',
-        //   foreground: 'hsl(var(--primary-foreground))',
-        // },
-        // secondary: {
-        //   DEFAULT: 'hsl(var(--secondary))',
-        //   foreground: 'hsl(var(--secondary-foreground))',
-        // },
-        // muted: {
-        //   DEFAULT: 'hsl(var(--muted))',
-        //   foreground: 'hsl(var(--muted-foreground))',
-        // },
-        // accent: {
-        //   DEFAULT: 'hsl(var(--accent))',
-        //   foreground: 'hsl(var(--accent-foreground))',
-        // },
-        // destructive: {
-        //   DEFAULT: 'hsl(var(--destructive))',
-        //   foreground: 'hsl(var(--destructive-foreground))',
-        // },
-        // border: 'hsl(var(--border))',
-        // input: 'hsl(var(--input))',
-        // ring: 'hsl(var(--ring))',
-        // chart: {
-        //   '1': 'hsl(var(--chart-1))',
-        //   '2': 'hsl(var(--chart-2))',
-        //   '3': 'hsl(var(--chart-3))',
-        //   '4': 'hsl(var(--chart-4))',
-        //   '5': 'hsl(var(--chart-5))',
-        // },
-      },
-      keyframes: {
-        'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-        },
-        'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
-        },
-				
+					light: 'rgb(12, 14, 18)',
+					dark: 'rgb(228, 233, 238)',
+				}
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',

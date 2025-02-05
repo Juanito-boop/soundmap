@@ -27,8 +27,8 @@ export default function RootLayout({
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 					{children}
 					<ThemeSwitcher />
+					<KoFi />
 				</ThemeProvider>
-			<KoFi />
 			</body>
 		</html>
 	)
