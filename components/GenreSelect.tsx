@@ -71,7 +71,7 @@ export function GenreSelect({ selectedGenres, setSelectedGenres, genres }: Genre
 								) : (
 									<div className="w-4 h-4 mr-2" />
 								)}
-								<Label htmlFor={`checkbox-${genre}`} className="flex-grow">
+								<Label htmlFor={`checkbox-${genre}`} className="grow">
 									{genre}
 								</Label>
 							</div>

@@ -1,104 +1,104 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-	darkMode: ['class'],
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  theme: {
-    extend: {
-      borderRadius: {
-        lg: '0.5rem',
-        md: 'calc(0.5rem - 2px)',
-        sm: 'calc(0.5rem - 4px)',
-      },
-      colors: {
+	darkMode: 'class',
+	content: [
+		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
+		'./components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./app/**/*.{js,ts,jsx,tsx,mdx}',
+	],
+	theme: {
+		extend: {
+			borderRadius: {
+				lg: 'var(--radius-lg)',
+				md: 'var(--radius-md)',
+				sm: 'var(--radius-sm)',
+			},
+			colors: {
 				background: {
-					light: 'rgb(255, 255, 255)',
-					dark: 'rgb(12, 14, 18)',
+					light: 'hsl(var(--color-background-light))',
+					dark: 'hsl(var(--color-background-dark))',
 				},
 				foreground: {
-					light: 'rgb(12, 14, 18)',
-					dark: 'rgb(247, 249, 252)',
+					light: 'hsl(var(--color-foreground-light))',
+					dark: 'hsl(var(--color-foreground-dark))',
 				},
 				card: {
-					light: 'rgb(255, 255, 255)',
-					dark: 'rgb(12, 14, 18)',
+					light: 'hsl(var(--color-card-light))',
+					dark: 'hsl(var(--color-card-dark))',
 				},
 				'card-foreground': {
-					light: 'rgb(12, 14, 18)',
-					dark: 'rgb(247, 249, 252)',
+					light: 'hsl(var(--color-card-foreground-light))',
+					dark: 'hsl(var(--color-card-foreground-dark))',
 				},
 				popover: {
-					light: 'rgb(255, 255, 255)',
-					dark: 'rgb(12, 14, 18)',
+					light: 'hsl(var(--color-popover-light))',
+					dark: 'hsl(var(--color-popover-dark))',
 				},
 				'popover-foreground': {
-					light: 'rgb(12, 14, 18)',
-					dark: 'rgb(247, 249, 252)',
+					light: 'hsl(var(--color-popover-foreground-light))',
+					dark: 'hsl(var(--color-popover-foreground-dark))',
 				},
 				primary: {
-					light: 'rgb(19, 22, 28)',
-					dark: 'rgb(247, 249, 252)',
+					light: 'hsl(var(--color-primary-light))',
+					dark: 'hsl(var(--color-primary-dark))',
 				},
 				'primary-foreground': {
-					light: 'rgb(247, 249, 252)',
-					dark: 'rgb(19, 22, 28)',
+					light: 'hsl(var(--color-primary-foreground-light))',
+					dark: 'hsl(var(--color-primary-foreground-dark))',
 				},
 				secondary: {
-					light: 'rgb(240, 244, 247)',
-					dark: 'rgb(22, 26, 33)',
+					light: 'hsl(var(--color-secondary-light))',
+					dark: 'hsl(var(--color-secondary-dark))',
 				},
 				'secondary-foreground': {
-					light: 'rgb(19, 22, 28)',
-					dark: 'rgb(247, 249, 252)',
+					light: 'hsl(var(--color-secondary-foreground-light))',
+					dark: 'hsl(var(--color-secondary-foreground-dark))',
 				},
 				muted: {
-					light: 'rgb(240, 244, 247)',
-					dark: 'rgb(22, 26, 33)',
+					light: 'hsl(var(--color-muted-light))',
+					dark: 'hsl(var(--color-muted-dark))',
 				},
 				'muted-foreground': {
-					light: 'rgb(108, 116, 128)',
-					dark: 'rgb(155, 164, 178)',
+					light: 'hsl(var(--color-muted-foreground-light))',
+					dark: 'hsl(var(--color-muted-foreground-dark))',
 				},
 				accent: {
-					light: 'rgb(240, 244, 247)',
-					dark: 'rgb(22, 26, 33)',
+					light: 'hsl(var(--color-accent-light))',
+					dark: 'hsl(var(--color-accent-dark))',
 				},
 				'accent-foreground': {
-					light: 'rgb(19, 22, 28)',
-					dark: 'rgb(247, 249, 252)',
+					light: 'hsl(var(--color-accent-foreground-light))',
+					dark: 'hsl(var(--color-accent-foreground-dark))',
 				},
 				destructive: {
-					light: 'rgb(235, 64, 52)',
-					dark: 'rgb(117, 32, 26)',
+					light: 'hsl(var(--color-destructive-light))',
+					dark: 'hsl(var(--color-destructive-dark))',
 				},
 				'destructive-foreground': {
-					light: 'rgb(247, 249, 252)',
-					dark: 'rgb(247, 249, 252)',
+					light: 'hsl(var(--color-destructive-foreground-light))',
+					dark: 'hsl(var(--color-destructive-foreground-dark))',
 				},
 				border: {
-					light: 'rgb(229, 234, 239)',
-					dark: 'rgb(22, 26, 33)',
+					light: 'hsl(var(--color-border-light))',
+					dark: 'hsl(var(--color-border-dark))',
 				},
 				input: {
-					DEFAULT: 'rgb(229, 234, 239)',
-					dark: 'rgb(22, 26, 33)',
+					DEFAULT: 'hsl(var(--color-input))',
+					dark: 'hsl(var(--color-input-dark))',
 				},
 				ring: {
-					light: 'rgb(12, 14, 18)',
-					dark: 'rgb(228, 233, 238)',
-				}
-      },
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-      },
-			
-    },
-  },
-  plugins: [require('tailwindcss-animate')],
+					light: 'hsl(var(--color-ring-light))',
+					dark: 'hsl(var(--color-ring-dark))',
+				},
+			},
+			animation: {
+				'accordion-down': 'accordion-down 0.2s ease-out',
+				'accordion-up': 'accordion-up 0.2s ease-out',
+			},
+		},
+	},
+	plugins: [require('tailwindcss-animate')],
 };
+
 export default config;

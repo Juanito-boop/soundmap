@@ -40,7 +40,7 @@ export function ControlButtons({
 						<SelectValue placeholder="Ordenar por" />
 					</SelectTrigger>
 					<SelectContent className="bg-input dark:bg-input-dark ">
-						<SelectItem value="popularity">Popularidad</SelectItem>
+						<SelectItem value="popularity">Popularity</SelectItem>
 						<SelectItem value="debut">Debut</SelectItem>
 					</SelectContent>
 				</Select>
@@ -59,7 +59,7 @@ export function ControlButtons({
 				<Button
           onClick={() => onColumnCountChange(1)}
           aria-label="Show 1 column"
-					className="relative transition-colors duration-200 rounded-none outline-none"
+					className="relative transition-colors duration-200 rounded-none outline-hidden"
         >
 					<Columns className="h-4 w-4 rotate-90" />
 					{columnCount === 1 && (
@@ -71,7 +71,7 @@ export function ControlButtons({
 				<Button
           onClick={() => onColumnCountChange(2)}
           aria-label="Show 2 columns"
-					className="relative transition-colors duration-200 rounded-none outline-none"
+					className="relative transition-colors duration-200 rounded-none outline-hidden"
         >
 					<Columns className="h-4 w-4" />
 					{columnCount === 2 && (
