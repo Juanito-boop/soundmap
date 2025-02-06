@@ -73,7 +73,7 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 										</Avatar>
 										<h3 className="font-bold text-lg my-auto">{artist.name}</h3>
 									</div>
-									<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-input [&>div]: dark:[&>div]:bg-input-dark [&>div]:text-lg">
+									<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-input dark:[&>div]:bg-input-dark [&>div]:text-lg">
 										<div className="row-start-1 flex flex-col rounded-sm p-1 align-middle">
 											<span className="mx-auto">Debut</span>
 											<span className="mx-auto">{artist.debut}</span>
@@ -119,7 +119,7 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 										</Avatar>
 										<h3 className="font-bold text-lg my-auto mx-auto">{artist.name}</h3>
 									</div>
-									<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-gray-700 [&>div]:text-lg">
+									<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-input dark:[&>div]:bg-input-dark [&>div]:text-lg">
 										<div className="row-start-1 flex flex-col rounded-sm p-1">
 											<span className="mx-auto">Debut</span>
 											<span className="mx-auto">{artist.debut}</span>
