@@ -67,10 +67,10 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 	const getInputStyle = (field: keyof typeof matchStatus) => {
 		switch (matchStatus[field]) {
 			case "correct":
-				return "bg-green-900 border-green-500 text-white"
+				return "bg-green-900 border-green-500 placeholder:text-white text-white"
 			case "higher":
 			case "lower":
-				return "bg-yellow-900 border-yellow-500 text-white"
+				return "bg-yellow-900 border-yellow-500 text-white placeholder:text-white"
 			case "continent":
 				return "bg-yellow-900 border-yellow-500 text-white"
 			default:
@@ -214,7 +214,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 						variant="ghost"
 						size="sm"
 						onClick={() => setStatus("correct")}
-						className={`flex-1 h-8 dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700" : "hover:bg-input"}`}
+						className={`flex-1 h-8 ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700 text-white" : "hover:bg-input dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black"}`}
 					>
 						<CheckIcon className="w-4 h-4" />
 					</Button>
@@ -222,7 +222,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 						variant="ghost"
 						size="sm"
 						onClick={() => setStatus("continent")}
-						className={`flex-1 h-8 dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black ${matchStatus[field] === "continent" ? "bg-yellow-600 hover:bg-yellow-700" : "hover:bg-input"}`}
+						className={`flex-1 h-8 ${matchStatus[field] === "continent" ? "bg-yellow-600 hover:bg-yellow-700 text-white" : "hover:bg-input dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black"}`}
 					>
 						<CircleIcon className="w-4 h-4" />
 					</Button>
@@ -237,7 +237,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 						variant="ghost"
 						size="sm"
 						onClick={() => setStatus("correct")}
-						className={`flex-1 h-8 dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700" : "hover:bg-input"}`}
+						className={`flex-1 h-8  ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700 text-white" : "hover:bg-input dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black"}`}
 					>
 						<CheckIcon className="w-4 h-4" />
 					</Button>
@@ -253,7 +253,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 							variant="ghost"
 							size="sm"
 							onClick={() => setStatus("correct")}
-							className={`flex-1 h-8 dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700" : "hover:bg-input"}`}
+							className={`flex-1 h-8 ${matchStatus[field] === "correct" ? "bg-green-600 hover:bg-green-700 text-white" : "hover:bg-input dark:text-input dark:bg-transparent dark:hover:bg-input-dark hover:text-black"}`}
 						>
 							<CheckIcon className="w-4 h-4" />
 						</Button>
@@ -261,7 +261,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 							variant="ghost"
 							size="sm"
 							onClick={() => setStatus("lower")}
-							className={`flex-1 h-8 text-black hover:text-black dark:text-input dark:bg-transparent dark:hover:bg-input-dark ${matchStatus[field] === "lower" ? "bg-yellow-600 hover:bg-yellow-700" : "hover:bg-input"}`}
+							className={`flex-1 h-8 ${matchStatus[field] === "lower" ? "bg-yellow-600 hover:bg-yellow-700 text-white" : "hover:bg-input text-black hover:text-black dark:text-input dark:bg-transparent dark:hover:bg-input-dark"}`}
 						>
 							{field === "debut" ? "Before" : "Lower"}
 						</Button>
@@ -269,7 +269,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 							variant="ghost"
 							size="sm"
 							onClick={() => setStatus("higher")}
-							className={`flex-1 h-8 text-black hover:text-black dark:text-input dark:bg-transparent dark:hover:bg-input-dark ${matchStatus[field] === "higher" ? "bg-yellow-600 hover:bg-yellow-700" : "hover:bg-input"}`}
+							className={`flex-1 h-8 ${matchStatus[field] === "higher" ? "bg-yellow-600 hover:bg-yellow-700 text-white" : "hover:bg-input text-black hover:text-black dark:text-input dark:bg-transparent dark:hover:bg-input-dark"}`}
 						>
 							{field === "debut" ? "After" : "Higher"}
 						</Button>
