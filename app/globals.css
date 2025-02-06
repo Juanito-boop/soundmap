@@ -3,6 +3,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+	--spacing: 0.25rem;
+	
   --radius-lg: 0.5rem;
   --radius-md: calc(0.5rem - 2px);
   --radius-sm: calc(0.5rem - 4px);
