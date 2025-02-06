@@ -1,10 +1,11 @@
-import { useState } from "react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
+"use client"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import type { Genre } from "@/lib/supabase"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import { Switch } from "@/components/ui/switch"
+import { useState } from "react"
+
+type Genre = "HIP HOP" | "INDIE" | "POP" | "R&B" | "ROCK"
 
 type GenreSelectProps = {
 	selectedGenres: Genre[]
@@ -16,58 +17,68 @@ export function GenreSelect({ selectedGenres, setSelectedGenres, genres }: Genre
 	const [isMultiSelect, setIsMultiSelect] = useState(false)
 
 	const handleGenreChange = (genre: Genre) => {
-		if (selectedGenres.includes(genre)) {
-			setSelectedGenres(selectedGenres.filter((g) => g !== genre))
+		if (isMultiSelect) {
+			const updatedGenres = selectedGenres.includes(genre)
+				? selectedGenres.filter((g) => g !== genre)
+				: [...selectedGenres, genre]
+			setSelectedGenres(updatedGenres)
 		} else {
-			setSelectedGenres([...selectedGenres, genre])
+			setSelectedGenres([genre])
 		}
 	}
 
 	return (
 		<div className="space-y-2">
-			<div className="flex items-center justify-between">
+			<div className="flex items-center justify-between mb-2">
 				<Label htmlFor="genre-select">Genre</Label>
 				<div className="flex items-center space-x-2">
 					<Label htmlFor="multi-select-switch" className="text-sm">
 						Multi-select
 					</Label>
-					<Switch 
-						id="multi-select-switch" 
-						className="data-[state=checked]:bg-green-600 data-[state=unchecked]:bg-red-600 [&>span]:bg-white" 
-						checked={isMultiSelect} 
-						onCheckedChange={setIsMultiSelect} 
-					/>
+					<Switch id="multi-select-switch" checked={isMultiSelect} onCheckedChange={setIsMultiSelect} className="bg-gray-600 data-[state=checked]:bg-green-600 data-[state=unchecked]:bg-red-600 [&>span]:bg-white" />
 				</div>
 			</div>
 			<Select
-				value={isMultiSelect ? undefined : selectedGenres[0]}
-				onValueChange={(value) => !isMultiSelect && setSelectedGenres([value as Genre])}
+				value={selectedGenres.length > 0 ? selectedGenres[0] : undefined}
+				onValueChange={(value) => handleGenreChange(value as Genre)}
 			>
-				<SelectTrigger id="genre-select" className="bg-input  dark:bg-input-dark ">
-					<SelectValue placeholder="Select genre" />
+				<SelectTrigger
+					id="genre-select"
+					className="w-full bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark"
+				>
+					<SelectValue placeholder="Select genre(s)">
+						{selectedGenres.length > 0
+							? isMultiSelect
+								? selectedGenres.join(", ")
+								: selectedGenres[0]
+							: "Select genre(s)"}
+					</SelectValue>
 				</SelectTrigger>
-				<SelectContent>
-					<ScrollArea className="h-[200px] bg-input  dark:bg-input-dark ">
-						{isMultiSelect
-							? genres.map((genre) => (
-								<div key={genre} className="flex items-center space-x-2 p-2">
+				<SelectContent className="bg-input dark:bg-input-dark">
+					{genres.map((genre) => (
+						<SelectItem key={genre} value={genre} className="p-0">
+							<div
+								className="flex items-center space-x-2 px-2 py-1.5 w-full cursor-pointer"
+								onClick={() => handleGenreChange(genre)}
+							>
+								{isMultiSelect ? (
 									<Checkbox
-										id={genre}
+										id={`checkbox-${genre}`}
 										checked={selectedGenres.includes(genre)}
 										onCheckedChange={() => handleGenreChange(genre)}
+										className="mr-2"
 									/>
-									<Label htmlFor={genre}>{genre}</Label>
-								</div>
-							))
-							: genres.map((genre) => (
-								<SelectItem key={genre} value={genre}>
+								) : (
+									<div className="w-4 h-4 mr-2" />
+								)}
+								<Label htmlFor={`checkbox-${genre}`} className="flex-grow">
 									{genre}
-								</SelectItem>
-							))}
-					</ScrollArea>
+								</Label>
+							</div>
+						</SelectItem>
+					))}
 				</SelectContent>
 			</Select>
 		</div>
 	)
 }
-

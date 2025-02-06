@@ -13,7 +13,6 @@ type ResultsSectionProps = {
 export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 	const [columnCount, setColumnCount] = useState<1 | 2>(2);
 	const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-	// Estado para el criterio de ordenamiento: por defecto "popularity"
 	const [sortField, setSortField] = useState<"popularity" | "debut">("popularity");
 
 	const sortedArtists = useMemo(() => {
@@ -24,11 +23,11 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 					? a.popularity - b.popularity
 					: b.popularity - a.popularity;
 			} else if (sortField === "debut") {
-				const debutA = typeof a.debut === "number" ? a.debut : parseInt(a.debut as string, 10) || 0;
-				const debutB = typeof b.debut === "number" ? b.debut : parseInt(b.debut as string, 10) || 0;
-				return sortOrder === "asc"
-					? debutA - debutB
-					: debutB - debutA;
+				const debutA =
+					typeof a.debut === "number" ? a.debut : parseInt(a.debut as string, 10) || 0;
+				const debutB =
+					typeof b.debut === "number" ? b.debut : parseInt(b.debut as string, 10) || 0;
+				return sortOrder === "asc" ? debutA - debutB : debutB - debutA;
 			}
 			return 0;
 		});
@@ -86,6 +85,10 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 										<div className="row-start-1 flex flex-col rounded-sm p-1">
 											<span className="mx-auto">Members</span>
 											<span className="mx-auto">{artist.members}</span>
+										</div>
+										<div className="row-start-2 col-start-1 flex flex-col rounded-sm p-1">
+											<span className="mx-auto">Genre</span>
+											<span className="mx-auto">{artist.genre}</span>
 										</div>
 										<div className="row-start-2 col-start-2 flex flex-col rounded-sm p-1">
 											<span className="mx-auto">Country</span>

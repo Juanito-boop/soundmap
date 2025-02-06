@@ -93,14 +93,14 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 					<SelectTrigger className={`bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark ${getInputStyle(field)}`}>
 						<SelectValue placeholder="Select country" />
 					</SelectTrigger>
-					<SelectContent className="bg-gray-700 py-2 dark:bg-gray-800 max-h-60">
+					<SelectContent className="bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark max-h-60">
 						<div className="p-2">
 							<Input
 								type="text"
 								placeholder="Search countries..."
 								value={countrySearchTerm}
 								onChange={(e) => setCountrySearchTerm(e.target.value)}
-								className="mb-2"
+								className="mb-2 border border-gray-200"
 							/>
 						</div>
 						{distinctCountries
@@ -132,7 +132,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 					<SelectTrigger className={`bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark ${getInputStyle(field)}`}>
 						<SelectValue placeholder="Select gender" />
 					</SelectTrigger>
-					<SelectContent className="bg-gray-700 py-2 dark:bg-gray-800">
+					<SelectContent className="bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark">
 						{["Female", "Male", "Mixed"].map((gender) => (
 							<SelectItem key={gender} value={gender}>
 								{gender}
@@ -152,7 +152,7 @@ export function FilterField({ field, filters, setFilters, matchStatus, setMatchS
 					<SelectTrigger className={`bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark ${getInputStyle(field)}`}>
 						<SelectValue placeholder="Select type" />
 					</SelectTrigger>
-					<SelectContent className="bg-gray-700 py-2 dark:bg-gray-800">
+					<SelectContent className="bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark">
 						{["Solo", "Group"].map((type) => (
 							<SelectItem key={type} value={type}>
 								{type}

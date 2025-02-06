@@ -24,8 +24,9 @@ type MatchStatus = {
 	popularity: string
 }
 
-export function useArtistSearch(initialGenre: Genre) {
-	const [selectedGenre, setSelectedGenre] = useState<Genre>(initialGenre)
+export function useArtistSearch(initialGenres: Genre[]) {
+	// Ahora el estado es un array de géneros
+	const [selectedGenres, setSelectedGenres] = useState<Genre[]>(initialGenres)
 	const [filters, setFilters] = useState<Filters>({
 		debut: "",
 		gender: "",
@@ -48,9 +49,9 @@ export function useArtistSearch(initialGenre: Genre) {
 				.from(genre)
 				.select("id, name, country, debut, gender, members, popularity, imageUrl")
 
-			// Excluir registros con debut 0 (registros desconocidos)
+			// Excluir registros con debut 0 (registros "desconocidos")
 			query = query.neq("debut", 0)
-			
+
 			// --- Filtro para "debut" ---
 			if (filters.debutMin && filters.debutMax) {
 				query = query
@@ -62,10 +63,8 @@ export function useArtistSearch(initialGenre: Genre) {
 					if (matchStatus.debut === "correct") {
 						query = query.eq("debut", debutYear)
 					} else if (matchStatus.debut === "lower") {
-						// "lower" en UI significa "Before"
 						query = query.lt("debut", debutYear)
 					} else if (matchStatus.debut === "higher") {
-						// "higher" en UI significa "After"
 						query = query.gt("debut", debutYear)
 					}
 				}
@@ -121,24 +120,31 @@ export function useArtistSearch(initialGenre: Genre) {
 		isLoading,
 		refetch,
 	} = useQuery<Artist[]>({
-		queryKey: ["artists", selectedGenre, filters, matchStatus],
+		// La queryKey ahora depende del array de géneros, filtros y matchStatus
+		queryKey: ["artists", selectedGenres, filters, matchStatus],
 		queryFn: async () => {
 			try {
-				const query = buildQuery(selectedGenre, filters, matchStatus)
-				const { data, error } = await query
-				if (error) throw error
-
-				// Si no hay datos, devolvemos un array vacío
-				if (!data) return []
-
-				return data.map((artist) => ({ ...artist, genre: selectedGenre }))
+				// Para cada género seleccionado se construye y ejecuta una query
+				const results = await Promise.all(
+					selectedGenres.map(async (genre) => {
+						const query = buildQuery(genre, filters, matchStatus)
+						const { data, error } = await query
+						if (error) throw error
+						if (!data) return []
+						// Agregamos el género al objeto para identificarlo
+						return data.map((artist) => ({ ...artist, genre }))
+					})
+				)
+				// Se aplanan los arrays de resultados en uno solo
+				return results.flat()
 			} catch (error) {
 				console.error("Error fetching artists:", error)
 				return []
 			}
 		},
-		// Ejecutamos la query si hay algún valor en los filtros y un género seleccionado
-		enabled: !!selectedGenre && Object.values(filters).some((value) => value !== ""),
+		enabled:
+			selectedGenres.length > 0 &&
+			Object.values(filters).some((value) => value !== ""),
 	})
 
 	const clearSearch = useCallback(() => {
@@ -171,6 +177,8 @@ export function useArtistSearch(initialGenre: Genre) {
 		artists,
 		isLoading,
 		clearSearch,
-		setSelectedGenre,
+		// Retornamos el setter para poder actualizar los géneros seleccionados
+		setSelectedGenres,
+		selectedGenres,
 	}
 }
