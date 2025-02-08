@@ -132,6 +132,10 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 											<span className="mx-auto">Members</span>
 											<span className="mx-auto">{artist.members}</span>
 										</div>
+										<div className="row-start-2 col-start-1 flex flex-col rounded-sm p-1">
+											<span className="mx-auto">Genre</span>
+											<span className="mx-auto">{artist.genre}</span>
+										</div>
 										<div className="row-start-2 col-start-2 flex flex-col rounded-sm p-1">
 											<span className="mx-auto">Country</span>
 											<span className="mx-auto">{artist.country}</span>
