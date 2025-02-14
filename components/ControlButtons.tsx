@@ -29,7 +29,7 @@ export function ControlButtons({
   return (
 		<div className="flex flex-col md:flex-row md:justify-between items-center mb-4 space-y-2 md:space-y-0">
 			{/* Sección de ordenamiento */}
-			<div className="flex items-center space-x-2">
+			<div className="flex flex-col md:flex-row items-start space-x-2 space-y-2">
 				<Select
 					value={sortField}
 					onValueChange={(value) =>
@@ -55,7 +55,7 @@ export function ControlButtons({
 			</div>
 
 			{/* Sección de columnas */}
-			<div className="flex space-x-2">
+			<div className="flex space-x-2 md:mr-3">
 				<Button
           onClick={() => onColumnCountChange(1)}
           aria-label="Show 1 column"

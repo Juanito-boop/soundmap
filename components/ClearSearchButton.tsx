@@ -1,16 +1,30 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
 
-type ClearSearchButtonProps = {
-  onClear: () => void
-}
+export function ClearSearchButton() {
+	const [isMounted, setIsMounted] = useState(false)
 
-export function ClearSearchButton({ onClear }: ClearSearchButtonProps) {
-  return (
-    <div className="mt-8 text-center">
-      <Button onClick={onClear} variant="outline">
-        Clear Search
-      </Button>
-    </div>
-  )
+	useEffect(() => {
+		setIsMounted(true)
+	}, [])
+
+	const handleClear = () => {
+		if (typeof window !== "undefined" && (window as any).clearArtistSearch) {
+			; (window as any).clearArtistSearch()
+		}
+	}
+
+	if (!isMounted) {
+		return null
+	}
+
+	return (
+		
+		<Button onClick={handleClear} variant="default" className="button-50">
+			Clear Search
+		</Button>
+	)
 }
 

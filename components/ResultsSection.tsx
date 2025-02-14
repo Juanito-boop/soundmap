@@ -150,9 +150,9 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 						)}
 				</div>
 			) : artists?.length === 0 ? (
-				<p className="text-center text-muted-foreground">No artists found matching your criteria</p>
+				<p className="text-center text-muted-foreground mb-20 md:mb-0">No artists found matching your criteria</p>
 			) : (
-				<p className="text-center text-muted-foreground">
+				<p className="text-center text-muted-foreground mb-20 md:mb-0">
 					Enter the information from your game to find possible artists
 				</p>
 			)}

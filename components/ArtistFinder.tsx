@@ -8,7 +8,6 @@ import { genres } from "@/lib/supabase"
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
 
 export function ArtistFinder() {
-	// Se inicializa con un array (por ejemplo, el primer género por defecto)
 	const {
 		filters,
 		setFilters,
@@ -19,13 +18,19 @@ export function ArtistFinder() {
 		clearSearch,
 		selectedGenres,
 		setSelectedGenres,
-	} = useArtistSearch([genres[0]]);
+	} = useArtistSearch([genres[0]])
 
 	const handleClearSearch = () => {
-		clearSearch();
-		// Reiniciamos la selección de géneros al valor por defecto
-		setSelectedGenres([genres[0]]);
-	};
+		clearSearch()
+		setSelectedGenres([genres[0]])
+	}
+
+	useEffect(() => {
+		(window as any).clearArtistSearch = handleClearSearch
+		return () => {
+			delete (window as any).clearArtistSearch
+		}
+	}, [handleClearSearch])
 
 	return (
 		<>
@@ -47,7 +52,6 @@ export function ArtistFinder() {
 						setSelectedGenres={setSelectedGenres}
 					/>
 					<ResultsSection artists={artists} isLoading={isLoading} />
-					<ClearSearchButton onClear={handleClearSearch} />
 				</div>
 			</div>
 		</>

@@ -4,13 +4,14 @@ import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ThemeSwitcher } from "@/components/theme-switcher"
 import KoFi from "@/components/ko-fi"
+import { ClearSearchButton } from "@/components/ClearSearchButton"
+import type React from "react"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
 	title: "Soundmap Artist Guesser",
 	description: "soundmap user: VXN.",
-	
 }
 
 export default function RootLayout({
@@ -26,8 +27,13 @@ export default function RootLayout({
 			<body className={inter.className}>
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 					{children}
-					<ThemeSwitcher />
-					<KoFi />
+					<div className="fixed bottom-4 left-0 right-0 flex justify-between items-end px-4 z-10">
+						<KoFi />
+						<div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 mb-17 md:my-auto">
+							<ClearSearchButton />
+						</div>
+						<ThemeSwitcher />
+					</div>
 				</ThemeProvider>
 			</body>
 		</html>
