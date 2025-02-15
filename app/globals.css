@@ -11,6 +11,7 @@
 
   --color-background-light: rgb(255, 255, 255);
   --color-background-dark: rgb(12, 14, 18);
+	--color-background-discord: rgb(30, 31, 34, 255);
 
   --color-foreground-light: rgb(12, 14, 18);
   --color-foreground-dark: rgb(247, 249, 252);
@@ -86,6 +87,10 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+
+	::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 @keyframes slideIn {

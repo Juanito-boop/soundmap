@@ -21,7 +21,6 @@ export function ClearSearchButton() {
 	}
 
 	return (
-		
 		<Button onClick={handleClear} variant="default" className="button-50">
 			Clear Search
 		</Button>
