@@ -55,7 +55,7 @@ export function ControlButtons({
 			</div>
 
 			{/* Sección de columnas */}
-			<div className="flex space-x-2 md:mr-3">
+			<div className="flex space-x-2">
 				<Button
           onClick={() => onColumnCountChange(1)}
           aria-label="Show 1 column"
