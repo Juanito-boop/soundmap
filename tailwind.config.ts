@@ -18,6 +18,7 @@ const config: Config = {
 				background: {
 					light: 'oklch(var(--color-background-light))',
 					dark: 'oklch(var(--color-background-dark))',
+					discord: 'oklch(var(--color-background-discord))',
 				},
 				foreground: {
 					light: 'oklch(var(--color-foreground-light))',
@@ -26,6 +27,7 @@ const config: Config = {
 				card: {
 					light: 'oklch(var(--color-card-light))',
 					dark: 'oklch(var(--color-card-dark))',
+					discord: 'oklch(var(--color-card-discord))',
 				},
 				'card-foreground': {
 					light: 'oklch(var(--color-card-foreground-light))',
@@ -84,8 +86,9 @@ const config: Config = {
 					dark: 'oklch(var(--color-border-dark))',
 				},
 				input: {
-					DEFAULT: 'oklch(var(--color-input))',
+					light: 'oklch(var(--color-input-light))',
 					dark: 'oklch(var(--color-input-dark))',
+					discord: 'oklch(var(--color-input-discord))'
 				},
 				ring: {
 					light: 'oklch(var(--color-ring-light))',

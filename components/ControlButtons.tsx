@@ -7,15 +7,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { ArrowUpDown, Columns } from "lucide-react";
+import { ArrowUpDown, Columns, Columns3 } from "lucide-react";
 
 type ControlButtonsProps = {
 	sortOrder: "asc" | "desc";
 	onSortOrderChange: (order: "asc" | "desc") => void;
 	sortField: "popularity" | "debut";
 	onSortFieldChange: (field: "popularity" | "debut") => void;
-	columnCount: 1 | 2;
-	onColumnCountChange: (count: 1 | 2) => void;
+	columnCount: 1 | 2 | 3;
+	onColumnCountChange: (count: 1 | 2 | 3) => void;
 };
 
 export function ControlButtons({
@@ -27,19 +27,19 @@ export function ControlButtons({
   onColumnCountChange,
 }: ControlButtonsProps) {
   return (
-		<div className="flex flex-col md:flex-row md:justify-between items-center mb-4 space-y-2 md:space-y-0">
+		<div className="flex flex-col items-center mb-4 space-y-2 md:flex-row md:justify-between md:space-y-0">
 			{/* Sección de ordenamiento */}
-			<div className="flex flex-col md:flex-row items-start space-x-2 space-y-2">
+			<div className="flex flex-col items-start space-x-2 space-y-2 md:flex-row">
 				<Select
 					value={sortField}
 					onValueChange={(value) =>
 						onSortFieldChange(value as "popularity" | "debut")
 					}
 				>
-					<SelectTrigger className="w-[180px] bg-input dark:bg-input-dark ">
+					<SelectTrigger className="w-32 text-black dark:text-white discord:text-white bg-input-light dark:bg-input-dark discord:bg-input-discord">
 						<SelectValue placeholder="Ordenar por" />
 					</SelectTrigger>
-					<SelectContent className="bg-input dark:bg-input-dark ">
+					<SelectContent className="text-black dark:text-white discord:text-white bg-input-light dark:bg-input-dark discord:bg-input-discord">
 						<SelectItem value="popularity">Popularity</SelectItem>
 						<SelectItem value="debut">Debut</SelectItem>
 					</SelectContent>
@@ -47,9 +47,9 @@ export function ControlButtons({
 				<Button 
 					onClick={() => onSortOrderChange(sortOrder === "asc" ? "desc" : "asc")}
 					aria-label={`Sort by ${sortField} ${sortOrder === "asc" ? "descending" : "ascending"}`}
-					className="dark:bg-input-dark bg-input border border-input"
+					className="text-black border w-2xs dark:text-white discord:text-white bg-input-light dark:bg-input-dark discord:bg-input-discord"
 				>
-					<ArrowUpDown className="mr-2 h-4 w-4" />
+					<ArrowUpDown className="w-4 h-4 mr-2" />
 					Sort by {sortField} {sortOrder === "asc" ? "Descending" : "Ascending"}
 				</Button>
 			</div>
@@ -59,27 +59,39 @@ export function ControlButtons({
 				<Button
           onClick={() => onColumnCountChange(1)}
           aria-label="Show 1 column"
-					className="relative transition-colors duration-200 rounded-none outline-hidden"
+					className="relative hidden transition-colors duration-200 rounded-none outline-none md:block"
         >
-					<Columns className="h-4 w-4 rotate-90" />
+					<Columns className="w-4 h-4 rotate-90" />
 					{columnCount === 1 && (
 						<span
-							className="absolute bottom-0 left-0 h-1 w-full bg-green-500 origin-top animate-slideIn"
+							className="absolute bottom-0 left-0 w-full h-1 origin-top bg-green-500 animate-slideIn"
 						/>
 					)}
         </Button>
 				<Button
           onClick={() => onColumnCountChange(2)}
           aria-label="Show 2 columns"
-					className="relative transition-colors duration-200 rounded-none outline-hidden"
+					className="relative hidden transition-colors duration-200 rounded-none outline-hidden md:block"
         >
-					<Columns className="h-4 w-4" />
+					<Columns className="w-4 h-4" />
 					{columnCount === 2 && (
 						<span
-							className="absolute bottom-0 left-0 h-1 w-full bg-green-500 origin-top animate-slideIn"
+							className="absolute bottom-0 left-0 w-full h-1 origin-top bg-green-500 animate-slideIn"
 						/>
 					)}
         </Button>
+				<Button
+					onClick={() => onColumnCountChange(3)}
+					aria-label="Show 1 column"
+					className="relative hidden transition-colors duration-200 rounded-none outline-hidden lg:block"
+				>
+					<Columns3 className="w-4 h-4" />
+					{columnCount === 3 && (
+						<span
+							className="absolute bottom-0 left-0 w-full h-1 origin-top bg-green-500 animate-slideIn"
+						/>
+					)}
+				</Button>
       </div>
     </div>
 	);

@@ -11,7 +11,7 @@ type ResultsSectionProps = {
 }
 
 export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
-	const [columnCount, setColumnCount] = useState<1 | 2>(2);
+	const [columnCount, setColumnCount] = useState<1 | 2 | 3>(2);
 	const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 	const [sortField, setSortField] = useState<"popularity" | "debut">("popularity");
 
@@ -34,7 +34,7 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 	}, [artists, sortField, sortOrder]);
 
 	return (
-		<div className="mt-4">
+		<div className="mt-4 ">
 			<ControlButtons
 				sortOrder={sortOrder}
 				onSortOrderChange={setSortOrder}
@@ -48,113 +48,158 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 				<p className="text-center text-muted-foreground">Loading artists...</p>
 			) : sortedArtists && sortedArtists.length > 0 ? (
 				<div
-					className={`grid gap-4 ${columnCount === 1
+					className={`grid gap-4 mb-15 ${
+						columnCount === 1
 							? "grid-cols-1"
 							: columnCount === 2
-								? "grid-cols-1 md:grid-cols-2"
-								: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-						}`}
+								? "md:grid-cols-2 lg:max-w-[65%] lg:mx-auto"
+								: "md:grid-cols-2 lg:grid-cols-3"
+					}`}
 				>
-						{columnCount === 2 ? (
-							sortedArtists.map((artist) => (
-								<Card
-									key={artist.id}
-									className="p-4 bg-card text-card-foreground min-h-fit grid grid-cols-3 grid-rows-3 gap-y-4"
-								>
-									<div className="col-span-3 flex flex-row justify-start gap-x-4 mx-5 my-auto">
-										<Avatar className="w-14 h-14 my-auto">
-											<AvatarImage
-												src={artist.imageUrl}
-												className="rounded-full"
-												alt={`${artist.name} photo`}
-												loading="lazy"
-											/>
-											<AvatarFallback>{artist.name}</AvatarFallback>
-										</Avatar>
-										<h3 className="font-bold text-lg my-auto">{artist.name}</h3>
+					{columnCount === 2 ? (
+						sortedArtists.map((artist) => (
+							<Card
+								key={artist.id}
+								className="grid grid-cols-3 grid-rows-3 p-4 bg-card text-card-foreground min-h-fit gap-y-4"
+							>
+								<div className="flex flex-row justify-start col-span-3 mx-5 my-auto gap-x-4">
+									<Avatar className="my-auto w-14 h-14">
+										<AvatarImage
+											src={artist.imageUrl}
+											className="rounded-full"
+											alt={`${artist.name} photo`}
+											loading="lazy"
+										/>
+										<AvatarFallback>{artist.name}</AvatarFallback>
+									</Avatar>
+									<h3 className="my-auto text-lg font-bold">{artist.name}</h3>
+								</div>
+								<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-input-light dark:[&>div]:bg-input-dark discord:[&>div]:bg-input-discord [&>div]:text-lg">
+									<div className="flex flex-col row-start-1 p-1 align-middle rounded-sm">
+										<span className="mx-auto">Debut</span>
+										<span className="mx-auto">{artist.debut}</span>
 									</div>
-									<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-input dark:[&>div]:bg-input-dark [&>div]:text-lg">
-										<div className="row-start-1 flex flex-col rounded-sm p-1 align-middle">
-											<span className="mx-auto">Debut</span>
-											<span className="mx-auto">{artist.debut}</span>
-										</div>
-										<div className="row-start-1 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Popularity</span>
-											<span className="mx-auto">#{artist.popularity}</span>
-										</div>
-										<div className="row-start-1 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Members</span>
-											<span className="mx-auto">{artist.members}</span>
-										</div>
-										<div className="row-start-2 col-start-1 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Genre</span>
-											<span className="mx-auto">{artist.genre}</span>
-										</div>
-										<div className="row-start-2 col-start-2 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Country</span>
-											<span className="mx-auto">{artist.country}</span>
-										</div>
-										<div className="row-start-2 col-start-3 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Gender</span>
-											<span className="mx-auto">{artist.gender}</span>
-										</div>
+									<div className="flex flex-col row-start-1 p-1 rounded-sm">
+										<span className="mx-auto">Popularity</span>
+										<span className="mx-auto">#{artist.popularity}</span>
 									</div>
-								</Card>
-							))
-						) : (
-							sortedArtists.map((artist) => (
-								<Card
-									key={artist.id}
-									className="p-4 bg-card text-card-foreground grid grid-cols-4 grid-rows-2 gap-4"
-								>
-									<div className="flex flex-col justify-center gap-x-4 mx-5 my-auto row-span-2 gap-y-2">
-										<Avatar className="w-16 h-16 my-auto mx-auto">
-											<AvatarImage
-												src={artist.imageUrl}
-												className="rounded-full"
-												alt={`${artist.name} photo`}
-												loading="lazy"
-											/>
-											<AvatarFallback>{artist.name}</AvatarFallback>
-										</Avatar>
-										<h3 className="font-bold text-lg my-auto mx-auto">{artist.name}</h3>
+									<div className="flex flex-col row-start-1 p-1 rounded-sm">
+										<span className="mx-auto">Members</span>
+										<span className="mx-auto">{artist.members}</span>
 									</div>
-									<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-input dark:[&>div]:bg-input-dark [&>div]:text-lg">
-										<div className="row-start-1 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Debut</span>
-											<span className="mx-auto">{artist.debut}</span>
-										</div>
-										<div className="row-start-1 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Popularity</span>
-											<span className="mx-auto">#{artist.popularity}</span>
-										</div>
-										<div className="row-start-1 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Members</span>
-											<span className="mx-auto">{artist.members}</span>
-										</div>
-										<div className="row-start-2 col-start-1 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Genre</span>
-											<span className="mx-auto">{artist.genre}</span>
-										</div>
-										<div className="row-start-2 col-start-2 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Country</span>
-											<span className="mx-auto">{artist.country}</span>
-										</div>
-										<div className="row-start-2 col-start-3 flex flex-col rounded-sm p-1">
-											<span className="mx-auto">Gender</span>
-											<span className="mx-auto">{artist.gender}</span>
-										</div>
+									<div className="flex flex-col col-start-1 row-start-2 p-1 rounded-sm">
+										<span className="mx-auto">Genre</span>
+										<span className="mx-auto">{artist.genre}</span>
 									</div>
-								</Card>
-							))
-						)}
+									<div className="flex flex-col col-start-2 row-start-2 p-1 rounded-sm">
+										<span className="mx-auto">Country</span>
+										<span className="mx-auto">{artist.country}</span>
+									</div>
+									<div className="flex flex-col col-start-3 row-start-2 p-1 rounded-sm">
+										<span className="mx-auto">Gender</span>
+										<span className="mx-auto">{artist.gender}</span>
+									</div>
+								</div>
+							</Card>
+						))
+					) : columnCount === 3 ? (
+						sortedArtists.map((artist) => (
+							<Card
+								key={artist.id}
+								className="grid grid-cols-3 grid-rows-3 p-4 bg-card text-card-foreground min-h-fit gap-y-4"
+							>
+								<div className="flex flex-row justify-start col-span-3 mx-5 my-auto gap-x-4">
+									<Avatar className="my-auto w-14 h-14">
+										<AvatarImage
+											src={artist.imageUrl}
+											className="rounded-full"
+											alt={`${artist.name} photo`}
+											loading="lazy"
+										/>
+										<AvatarFallback>{artist.name}</AvatarFallback>
+									</Avatar>
+									<h3 className="my-auto text-lg font-bold">{artist.name}</h3>
+								</div>
+								<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-input-light dark:[&>div]:bg-input-dark discord:[&>div]:bg-input-discord [&>div]:text-lg">
+									<div className="flex flex-col row-start-1 p-1 align-middle rounded-sm">
+										<span className="mx-auto">Debut</span>
+										<span className="mx-auto">{artist.debut}</span>
+									</div>
+									<div className="flex flex-col row-start-1 p-1 rounded-sm">
+										<span className="mx-auto">Popularity</span>
+										<span className="mx-auto">#{artist.popularity}</span>
+									</div>
+									<div className="flex flex-col row-start-1 p-1 rounded-sm">
+										<span className="mx-auto">Members</span>
+										<span className="mx-auto">{artist.members}</span>
+									</div>
+									<div className="flex flex-col col-start-1 row-start-2 p-1 rounded-sm">
+										<span className="mx-auto">Genre</span>
+										<span className="mx-auto">{artist.genre}</span>
+									</div>
+									<div className="flex flex-col col-start-2 row-start-2 p-1 rounded-sm">
+										<span className="mx-auto">Country</span>
+										<span className="mx-auto">{artist.country}</span>
+									</div>
+									<div className="flex flex-col col-start-3 row-start-2 p-1 rounded-sm">
+										<span className="mx-auto">Gender</span>
+										<span className="mx-auto">{artist.gender}</span>
+									</div>
+								</div>
+							</Card>
+						))
+					) : (
+						sortedArtists.map((artist) => (
+							<Card
+								key={artist.id}
+								className="grid grid-cols-4 grid-rows-2 gap-4 p-4 bg-card text-card-foreground lg:min-w-[65%] lg:max-w-[65%] lg:mx-auto"
+							>
+								<div className="flex flex-col justify-center row-span-2 mx-5 my-auto gap-x-4 gap-y-2">
+									<Avatar className="w-16 h-16 mx-auto my-auto">
+										<AvatarImage
+											src={artist.imageUrl}
+											className="rounded-full"
+											alt={`${artist.name} photo`}
+											loading="lazy"
+										/>
+										<AvatarFallback>{artist.name}</AvatarFallback>
+									</Avatar>
+									<h3 className="mx-auto my-auto text-lg font-bold">{artist.name}</h3>
+								</div>
+								<div className="grid grid-cols-3 col-span-3 row-span-2 gap-2 [&>div]:bg-input-light dark:[&>div]:bg-input-dark discord:[&>div]:bg-input-discord [&>div]:text-lg">
+									<div className="flex flex-col row-start-1 p-1 rounded-sm">
+										<span className="mx-auto">Debut</span>
+										<span className="mx-auto">{artist.debut}</span>
+									</div>
+									<div className="flex flex-col row-start-1 p-1 rounded-sm">
+										<span className="mx-auto">Popularity</span>
+										<span className="mx-auto">#{artist.popularity}</span>
+									</div>
+									<div className="flex flex-col row-start-1 p-1 rounded-sm">
+										<span className="mx-auto">Members</span>
+										<span className="mx-auto">{artist.members}</span>
+									</div>
+									<div className="flex flex-col col-start-1 row-start-2 p-1 rounded-sm">
+										<span className="mx-auto">Genre</span>
+										<span className="mx-auto">{artist.genre}</span>
+									</div>
+									<div className="flex flex-col col-start-2 row-start-2 p-1 rounded-sm">
+										<span className="mx-auto">Country</span>
+										<span className="mx-auto">{artist.country}</span>
+									</div>
+									<div className="flex flex-col col-start-3 row-start-2 p-1 rounded-sm">
+										<span className="mx-auto">Gender</span>
+										<span className="mx-auto">{artist.gender}</span>
+									</div>
+								</div>
+							</Card>
+						))
+					)}
 				</div>
 			) : artists?.length === 0 ? (
-				<p className="text-center text-muted-foreground mb-20 md:mb-0">No artists found matching your criteria</p>
+				<p className="mb-20 text-center text-muted-foreground-light dark:text-muted-foreground-dark md:mb-0">No artists found matching your criteria</p>
 			) : (
-				<p className="text-center text-muted-foreground mb-20 md:mb-0">
-					Enter the information from your game to find possible artists
-				</p>
+				<p className="mb-20 text-center text-muted-foreground-light dark:text-muted-foreground-dark md:mb-0">Enter the information from your game to find possible artists</p>
 			)}
 		</div>
 	)

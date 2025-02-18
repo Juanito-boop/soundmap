@@ -6,6 +6,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher"
 import KoFi from "@/components/ko-fi"
 import { ClearSearchButton } from "@/components/ClearSearchButton"
 import type React from "react"
+import { ScrollToTopButton } from "@/components/ScrollToTopButton"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -27,11 +28,12 @@ export default function RootLayout({
 			<body className={inter.className}>
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 					{children}
-					<div className="fixed bottom-4 left-0 right-0 flex justify-between items-end px-4 z-10">
+					<div className="fixed left-0 right-0 z-10 flex items-end justify-between px-4 bottom-10 md:bottom-4">
 						<KoFi />
-						<div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 mb-17 md:my-auto">
+						<div className="absolute bottom-0 transform -translate-x-1/2 left-1/2 mb-17 md:my-auto">
 							<ClearSearchButton />
 						</div>
+						<ScrollToTopButton />
 						<ThemeSwitcher />
 					</div>
 				</ThemeProvider>

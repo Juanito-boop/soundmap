@@ -44,7 +44,7 @@ export function GenreSelect({ selectedGenres, setSelectedGenres, genres }: Genre
 			>
 				<SelectTrigger
 					id="genre-select"
-					className="w-full bg-input text-input-foreground dark:bg-input-dark dark:text-input-foreground-dark"
+					className="border-black/60 dark:border-white discord:border-white bg-input-light text-input-dark dark:bg-input-dark dark:text-input-light discord:bg-input-discord discord:text-white focus:ring-0 focus:ring-offset-0"
 				>
 					<SelectValue placeholder="Select genre(s)">
 						{selectedGenres.length > 0
@@ -54,7 +54,7 @@ export function GenreSelect({ selectedGenres, setSelectedGenres, genres }: Genre
 							: "Select genre(s)"}
 					</SelectValue>
 				</SelectTrigger>
-				<SelectContent className="bg-input dark:bg-input-dark">
+				<SelectContent className="border-black/60 dark:border-white discord:border-white bg-input-light text-input-dark dark:bg-input-dark dark:text-input-light discord:bg-input-discord discord:text-white">
 					{genres.map((genre) => (
 						<SelectItem key={genre} value={genre} className="p-0">
 							<div

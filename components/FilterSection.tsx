@@ -1,45 +1,28 @@
-import type { Dispatch, SetStateAction } from "react"
-import { Card } from "@/components/ui/card"
-import { genres, type Genre } from "@/lib/supabase"
-import { FilterField } from "./FilterField"
-import { GenreSelect } from "./GenreSelect"
+import type { Dispatch, SetStateAction } from "react";
+import { Card } from "@/components/ui/card";
+import { genres, type Genre } from "@/lib/supabase";
+import { FilterField } from "./FilterField";
+import { GenreSelect } from "./GenreSelect";
+
+type FilterValues = {
+	debut: string;
+	gender: string;
+	members: string;
+	country: string;
+	popularity: string;
+};
 
 type FilterSectionProps = {
-	filters: {
-		debut: string
-		gender: string
-		members: string
-		country: string
-		popularity: string
-	}
-	setFilters: Dispatch<
-		SetStateAction<{
-			debut: string
-			gender: string
-			members: string
-			country: string
-			popularity: string
-		}>
-	>
-	matchStatus: {
-		debut: string
-		gender: string
-		members: string
-		country: string
-		popularity: string
-	}
-	setMatchStatus: Dispatch<
-		SetStateAction<{
-			debut: string
-			gender: string
-			members: string
-			country: string
-			popularity: string
-		}>
-	>
-	selectedGenres: Genre[]
-	setSelectedGenres: (genres: Genre[]) => void
-}
+	filters: FilterValues;
+	setFilters: Dispatch<SetStateAction<FilterValues>>;
+	matchStatus: FilterValues;
+	setMatchStatus: Dispatch<SetStateAction<FilterValues>>;
+	selectedGenres: Genre[];
+	setSelectedGenres: (genres: Genre[]) => void;
+};
+
+const firstGroupFields: (keyof FilterValues)[] = ["debut", "popularity", "members"];
+const secondGroupFields: (keyof FilterValues)[] = ["country", "gender"];
 
 export function FilterSection({
 	filters,
@@ -50,8 +33,8 @@ export function FilterSection({
 	setSelectedGenres,
 }: FilterSectionProps) {
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-			{(["debut", "popularity", "members"] as const).map((field) => (
+		<div className="grid grid-cols-1 gap-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
+			{firstGroupFields.map((field) => (
 				<FilterField
 					key={field}
 					field={field}
@@ -61,10 +44,14 @@ export function FilterSection({
 					setMatchStatus={setMatchStatus}
 				/>
 			))}
-			<Card className="p-4 bg-card text-card-foreground">
-				<GenreSelect selectedGenres={selectedGenres} setSelectedGenres={setSelectedGenres} genres={genres} />
+			<Card className="p-4 bg-card-light dark:bg-card-dark discord:bg-card-discord">
+				<GenreSelect
+					selectedGenres={selectedGenres}
+					setSelectedGenres={setSelectedGenres}
+					genres={genres}
+				/>
 			</Card>
-			{(["country", "gender"] as const).map((field) => (
+			{secondGroupFields.map((field) => (
 				<FilterField
 					key={field}
 					field={field}
@@ -75,6 +62,5 @@ export function FilterSection({
 				/>
 			))}
 		</div>
-	)
+	);
 }
-
