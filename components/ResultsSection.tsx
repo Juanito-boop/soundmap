@@ -155,7 +155,7 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 								className="grid grid-cols-4 grid-rows-2 gap-4 p-4 bg-card text-card-foreground lg:min-w-4xl lg:max-w-4xl lg:mx-auto"
 							>
 								<div className="flex flex-col justify-center row-span-2 mx-5 my-auto gap-x-4 gap-y-2">
-									<Avatar className="w-16 h-16 mx-auto my-auto">
+									<Avatar className="size-16 m-auto">
 										<AvatarImage
 											src={artist.imageUrl}
 											className="rounded-full"
