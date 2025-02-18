@@ -27,7 +27,7 @@ export function ControlButtons({
   onColumnCountChange,
 }: ControlButtonsProps) {
   return (
-		<div className="flex flex-col items-center mb-4 space-y-2 md:flex-row md:justify-between md:space-y-0">
+		<div className="flex flex-col items-center mb-4 space-y-2 md:flex-row md:justify-between md:space-y-0 max-w-4xl mx-auto">
 			{/* Sección de ordenamiento */}
 			<div className="flex flex-col items-start space-x-2 space-y-2 md:flex-row">
 				<Select
