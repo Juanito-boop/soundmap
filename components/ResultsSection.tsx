@@ -52,7 +52,7 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 						columnCount === 1
 							? "grid-cols-1"
 							: columnCount === 2
-								? "md:grid-cols-2 lg:max-w-[65%] lg:mx-auto"
+								? "md:grid-cols-2 lg:max-w-4xl lg:mx-auto"
 								: "md:grid-cols-2 lg:grid-cols-3"
 					}`}
 				>
@@ -152,7 +152,7 @@ export function ResultsSection({ artists, isLoading }: ResultsSectionProps) {
 						sortedArtists.map((artist) => (
 							<Card
 								key={artist.id}
-								className="grid grid-cols-4 grid-rows-2 gap-4 p-4 bg-card text-card-foreground lg:min-w-[65%] lg:max-w-[65%] lg:mx-auto"
+								className="grid grid-cols-4 grid-rows-2 gap-4 p-4 bg-card text-card-foreground lg:min-w-4xl lg:max-w-4xl lg:mx-auto"
 							>
 								<div className="flex flex-col justify-center row-span-2 mx-5 my-auto gap-x-4 gap-y-2">
 									<Avatar className="w-16 h-16 mx-auto my-auto">
