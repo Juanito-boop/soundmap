@@ -25,7 +25,7 @@ export default function RootLayout({
 			<head>
 				<link rel="icon" href="/image.svg" sizes="any" />
 			</head>
-			<body className={inter.className}>
+			<body className={inter.className + `bg-background-light dark:bg-background-dark discord:bg-background-discord`}>	
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 					{children}
 					<div className="fixed left-0 right-0 z-10 flex items-end justify-between px-4 bottom-10 md:bottom-4">
