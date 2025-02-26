@@ -45,10 +45,10 @@ export function FilterField({
 	const [isRangeMode, setIsRangeMode] = useState(false)
 
 	const inputStyles: Record<string, string> = {
-		correct: "bg-green-900 border-green-500 placeholder:text-white text-white",
-		higher: "bg-yellow-900 border-yellow-500 text-white placeholder:text-white",
-		lower: "bg-yellow-900 border-yellow-500 text-white placeholder:text-white",
-		continent: "bg-yellow-900 border-yellow-500 text-white",
+		correct: "bg-green-900 border-green-500 placeholder:text-white text-white dark:bg-green-900 dark:border-green-500 dark:placeholder:text-white text-white discord:bg-green-900 discord:border-green-500 discord:placeholder:text-white text-white",
+		higher: "bg-yellow-900 border-yellow-500 placeholder:text-white text-white dark:bg-yellow-900 dark:border-yellow-500 dark:placeholder:text-white text-white discord:bg-yellow-900 discord:border-yellow-500 discord:placeholder:text-white text-white",
+		lower: "bg-yellow-900 border-yellow-500 placeholder:text-white text-white dark:bg-yellow-900 dark:border-yellow-500 dark:placeholder:text-white text-white discord:bg-yellow-900 discord:border-yellow-500 discord:placeholder:text-white text-white",
+		continent: "bg-yellow-900 border-yellow-500 placeholder:text-white text-white dark:bg-yellow-900 dark:border-yellow-500 dark:placeholder:text-white text-white discord:bg-yellow-900 discord:border-yellow-500 discord:placeholder:text-white text-white",
 	}
 
 	const getInputStyle = (field: keyof typeof matchStatus) => {
@@ -68,12 +68,12 @@ export function FilterField({
 	const renderCountrySelect = () => (
 		<Select value={filters.country || undefined} onValueChange={handleSelectChange}>
 			<SelectTrigger
-				className={`${getInputStyle("country")} bg-input-light text-input-dark border-black/60 focus:ring-0 focus:ring-offset-0 dark:bg-input-dark dark:text-input-light dark:border-white dark:focus:ring-0 dark:focus:ring-offset-0 discord:bg-input-discord discord:text-input-light discord:border-white discord:focus:ring-0 discord:focus:ring-offset-0`}
+				className={`bg-input-light text-input-dark dark:bg-input-dark dark:text-input-light discord:bg-input-discord discord:text-input-light border-black/60 dark:border-white discord:border-white focus:ring-0 focus:ring-offset-0 dark:focus:ring-0 dark:focus:ring-offset-0 ${getInputStyle(field)}`}
 			>
 				<SelectValue placeholder="Select country" />
 			</SelectTrigger>
 			<SelectContent 
-				className="bg-input-light text-input-dark dark:bg-input-dark dark:text-white discord:bg-input-discord discord:text-input-light max-h-60 border-black/60 dark:border-white discord:border-white"
+				className={`bg-input-light text-input-dark dark:bg-input-dark dark:text-input-light discord:bg-input-discord discord:text-input-light border-black/60 dark:border-white discord:border-white focus:ring-0 focus:ring-offset-0 dark:focus:ring-0 dark:focus:ring-offset-0 ${getInputStyle(field)} max-h-60 border-black/60 dark:border-white discord:border-white`}
 				onPointerDownOutside={(e) => e.preventDefault()}
 			>
 				<div className="p-2">
@@ -109,7 +109,7 @@ export function FilterField({
 			>
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
-			<SelectContent className="bg-input-light text-input-dark dark:bg-input-dark dark:text-input-light discord:bg-input-discord discord:text-input-light border-black/60 dark:border-white discord:border-white">
+			<SelectContent className={`bg-input-light text-input-dark dark:bg-input-dark dark:text-input-light discord:bg-input-discord discord:text-input-light border-black/60 dark:border-white discord:border-white focus:ring-0 focus:ring-offset-0 dark:focus:ring-0 dark:focus:ring-offset-0 ${getInputStyle(field)}`}>
 				{options.map((option) => (
 					<SelectItem key={option} value={option}>
 						{option}
